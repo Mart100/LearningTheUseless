@@ -64,5 +64,6 @@
 		display: flex;
 		flex-wrap: wrap;
 		flex-direction: row;
+		justify-content: space-around;
 	}
 </style>

@@ -13,7 +13,6 @@
 		"updateSupabaseTypes": "supabase gen types typescript --project-id qrciyzovgxpamjuacxnx > src/database.types.ts"
 	},
 	"devDependencies": {
-		"@fontsource/fira-mono": "^4.5.10",
 		"@neoconfetti/svelte": "^1.0.0",
 		"@playwright/test": "^1.28.1",
 		"@sveltejs/adapter-auto": "^2.0.0",
@@ -41,6 +40,8 @@
 		"@supabase/auth-ui-shared": "^0.1.6",
 		"@supabase/auth-ui-svelte": "^0.2.3",
 		"@supabase/supabase-js": "^2.33.1",
+		"@tabler/icons-svelte": "^2.32.0",
+		"@vercel/analytics": "^1.0.2",
 		"chart.js": "^4.4.0",
 		"svelte-chartjs": "^3.1.2"
 	}

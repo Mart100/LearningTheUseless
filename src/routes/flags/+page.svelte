@@ -18,7 +18,7 @@
 	let score = 0
 	let countryIdx = 0
 	let country: { code: string; name: string } | undefined
-	let countryFlagUrl: string = ''
+	let countryFlagUrl = ''
 	let countryInput: HTMLInputElement
 	let restartBtn: HTMLButtonElement
 	let countryInputSuggestions: string[] = []

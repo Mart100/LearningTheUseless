@@ -1,133 +1,107 @@
-<!-- src/routes/account/+page.svelte -->
 <script lang="ts">
-	import Avatar from './Avatar.svelte'
 	import { enhance } from '$app/forms'
 
+	import { IconFriends, IconClock } from '@tabler/icons-svelte'
+
 	export let data
-	export let form
 
-	let { session, supabase, profile } = data
-	$: ({ session, supabase, profile } = data)
+	let { session, supabase, profile, user } = data
+	$: ({ session, supabase, profile, user } = data)
 
-	$: console.log(form)
+	let username: string = profile?.username ?? user?.email?.split('@')[0] ?? ''
+	let avatar: string = profile?.avatar_url ?? ''
+	let avatarUrl: string
+	let createdAt = new Date(user.created_at ?? 0)
+	let createdAtString = createdAt.toLocaleDateString('en-US', {
+		year: 'numeric',
+		month: 'long'
+	})
 
-	let profileForm: HTMLFormElement
-	let loading = false
-	let updateErrorMsg = ''
-	let username: string = profile?.username ?? ''
-	let avatarUrl: string = profile?.avatar_url ?? ''
-
+	let signOutLoading = false
 	const handleSignOut = () => {
-		loading = true
+		signOutLoading = true
 		return async ({ update }: { update: any }) => {
-			loading = false
+			signOutLoading = false
 			update()
 		}
 	}
+
+	const downloadImage = async (path: string) => {
+		try {
+			const { data, error } = await supabase.storage.from('avatars').download(path)
+			if (error) throw error
+
+			const url = URL.createObjectURL(data)
+			avatarUrl = url
+		} catch (error) {
+			if (error instanceof Error) console.log('Error downloading image: ', error.message)
+		}
+	}
+
+	$: if (avatar) downloadImage(avatar)
 </script>
 
-<div class="form-widget">
-	<form
-		class="form-widget"
-		method="post"
-		action="?/update"
-		use:enhance={(event) => {
-			loading = true
-			return async ({ result, update }) => {
-				loading = false
-
-				if (result.type === 'failure') {
-					if (typeof result.data?.errorMsg == 'string') updateErrorMsg = result.data?.errorMsg
-				} else if (result.type === 'success') {
-					updateErrorMsg = ''
-				}
-			}
-		}}
-		bind:this={profileForm}
-	>
-		<Avatar
-			{supabase}
-			bind:url={avatarUrl}
-			on:upload={() => {
-				profileForm.requestSubmit()
-			}}
-		/>
-		<div>
-			<label for="email">Email</label>
-			<input id="email" class="input" type="text" value={session.user.email} disabled />
+<div class="account">
+	<div class="user">
+		<div class="left">
+			<h1 class="username">{username}</h1>
+			<h2 class="friends"><IconClock /><span>Joined {createdAtString}</span></h2>
+			<h2 class="friends"><IconFriends /><span>8 Friends</span></h2>
 		</div>
-
-		<div>
-			<label for="username">Username</label>
-			<input
-				id="username"
-				class="input"
-				name="username"
-				type="text"
-				value={form?.username ?? username}
-			/>
+		<div class="right">
+			<img class="avatar" src={avatarUrl} alt="avatar" />
 		</div>
-		<div>
-			<input
-				type="submit"
-				class="button primary"
-				value={loading ? 'Loading...' : 'Update'}
-				disabled={loading}
-			/>
-			{#if updateErrorMsg}
-				<p class="error">{updateErrorMsg}</p>
-			{/if}
-		</div>
-	</form>
-
-	<form method="post" action="?/signout" use:enhance={handleSignOut}>
-		<div>
-			<button class="button" disabled={loading}>Sign Out</button>
-		</div>
-	</form>
+	</div>
+	<div class="buttons">
+		<a class="button" href="account/edit">Edit Profile</a>
+		<form method="post" action="?/signout" use:enhance={handleSignOut}>
+			<div>
+				<button class="button" disabled={signOutLoading}>Sign Out</button>
+			</div>
+		</form>
+	</div>
 </div>
 
 <style lang="scss">
-	.error {
-		margin: 0;
-		text-align: center;
-		color: red;
-	}
+	.account {
+		max-width: 600px;
+		width: 100%;
+		margin: 0 auto;
 
-	@keyframes spin {
-		from {
-			transform: rotate(0deg);
-		}
-		to {
-			transform: rotate(360deg);
-		}
-	}
+		.user {
+			text-align: left;
+			display: flex;
+			justify-content: space-between;
+			max-width: 100%;
 
-	.form-widget {
-		display: flex;
-		flex-direction: column;
-		gap: 20px;
+			.username {
+				margin: 0;
+				font-size: 1.5rem;
+				text-align: left;
+				font-weight: 900;
+			}
 
-		label {
-			display: block;
-			margin: 5px 0;
-			color: var(--custom-color-secondary);
-			font-size: 0.8rem;
-			text-transform: uppercase;
-		}
+			.avatar {
+				border-radius: 20%;
+				height: 7em;
+			}
 
-		.input {
-			padding: 8px;
-			display: block;
+			h2 {
+				font-size: 1.1rem;
+				display: flex;
+				align-items: center;
 
-			&[disabled] {
-				color: var(--custom-color-secondary);
+				span {
+					margin-left: 1rem;
+				}
 			}
 		}
 
-		.button {
-			display: block;
-			width: 100%;
+		.buttons {
+			display: flex;
+			justify-content: space-between;
+			margin-top: 1rem;
+			text-decoration: none;
 		}
 	}
 </style>

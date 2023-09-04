@@ -1,9 +1,13 @@
-// src/routes/+layout.ts
 import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public'
 import { createSupabaseLoadClient } from '@supabase/auth-helpers-sveltekit'
 import type { Database } from '../database.types'
 
+import { dev } from '$app/environment'
+import { inject } from '@vercel/analytics'
+
 export const load = async ({ fetch, data, depends }) => {
+	inject({ mode: dev ? 'development' : 'production' })
+
 	depends('supabase:auth')
 
 	const supabase = createSupabaseLoadClient<Database>({

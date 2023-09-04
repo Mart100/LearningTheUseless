@@ -47,4 +47,20 @@
 			font-size: 1rem;
 		}
 	}
+
+	@media (max-width: 800px) {
+		.gameTile {
+			width: 40%;
+			padding: 10px;
+			margin: 10px;
+
+			h1 {
+				font-size: 1.5rem;
+			}
+
+			p {
+				font-size: 0.8rem;
+			}
+		}
+	}
 </style>
