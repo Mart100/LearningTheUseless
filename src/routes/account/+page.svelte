@@ -1,15 +1,16 @@
 <script lang="ts">
 	import { enhance } from '$app/forms'
 
+	import Friends from './Friends.svelte'
 	import { IconFriends, IconClock } from '@tabler/icons-svelte'
 
 	export let data
 
-	let { session, supabase, profile, user } = data
-	$: ({ session, supabase, profile, user } = data)
+	let { session, supabase, profile, user, followers, following } = data
+	$: ({ session, supabase, profile, user, followers, following } = data)
 
-	let username: string = profile?.username ?? user?.email?.split('@')[0] ?? ''
-	let avatar: string = profile?.avatar_url ?? ''
+	let username: string = profile.username ?? user.email?.split('@')[0] ?? ''
+	let avatar: string = profile.avatar_url ?? ''
 	let avatarUrl: string
 	let createdAt = new Date(user.created_at ?? 0)
 	let createdAtString = createdAt.toLocaleDateString('en-US', {
@@ -46,7 +47,9 @@
 		<div class="left">
 			<h1 class="username">{username}</h1>
 			<h2 class="friends"><IconClock /><span>Joined {createdAtString}</span></h2>
-			<h2 class="friends"><IconFriends /><span>8 Friends</span></h2>
+			<h2 class="friends">
+				<IconFriends /><span>{following.length} Following / {followers.length} Followers</span>
+			</h2>
 		</div>
 		<div class="right">
 			<img class="avatar" src={avatarUrl} alt="avatar" />
@@ -60,6 +63,9 @@
 			</div>
 		</form>
 	</div>
+	<hr />
+	<Friends user={{ ...profile, followers, following }} {supabase} />
+	<hr />
 </div>
 
 <style lang="scss">
@@ -68,7 +74,7 @@
 		width: 100%;
 		margin: 0 auto;
 
-		.user {
+		> .user {
 			text-align: left;
 			display: flex;
 			justify-content: space-between;

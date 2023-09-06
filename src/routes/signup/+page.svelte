@@ -2,8 +2,17 @@
 <script lang="ts">
 	import { Auth } from '@supabase/auth-ui-svelte'
 	import { ThemeSupa } from '@supabase/auth-ui-shared'
+	import { goto } from '$app/navigation'
 
 	export let data
+
+	console.log(data.url)
+
+	$: {
+		if (data.session) {
+			goto('/account')
+		}
+	}
 </script>
 
 <svelte:head>
@@ -22,7 +31,7 @@
 		}}
 		socialLayout="horizontal"
 		theme="dark"
-		additionalData={{}}
+		additionalData={{ provider: 'google' }}
 		providers={['google', 'discord']}
 	/>
 </div>

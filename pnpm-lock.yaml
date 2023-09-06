@@ -12,14 +12,14 @@ dependencies:
     specifier: ^0.1.6
     version: 0.1.6(@supabase/supabase-js@2.33.1)
   '@supabase/auth-ui-svelte':
-    specifier: ^0.2.3
-    version: 0.2.3(@supabase/supabase-js@2.33.1)
+    specifier: ^0.2.4
+    version: 0.2.4(@supabase/supabase-js@2.33.1)
   '@supabase/supabase-js':
     specifier: ^2.33.1
     version: 2.33.1
   '@tabler/icons-svelte':
-    specifier: ^2.32.0
-    version: 2.32.0(svelte@4.2.0)
+    specifier: ^2.33.0
+    version: 2.33.0(svelte@4.2.0)
   '@vercel/analytics':
     specifier: ^1.0.2
     version: 1.0.2
@@ -465,8 +465,8 @@ packages:
       '@supabase/supabase-js': 2.33.1
     dev: false
 
-  /@supabase/auth-ui-svelte@0.2.3(@supabase/supabase-js@2.33.1):
-    resolution: {integrity: sha512-GG53X4Hdg03sL+y8Eossc4J0KQ+9lo7JtXtbFIunURfmc45Wg1aFurUYNsDhO5BFXcRKQAIq+h5DXdbBdBkz/A==}
+  /@supabase/auth-ui-svelte@0.2.4(@supabase/supabase-js@2.33.1):
+    resolution: {integrity: sha512-h0P6cVnzGjjyrbeSUIjOEorlGLRk1AhGoqeh7kqgHN7eURCgDskHjq18ZxdRGIVMAsMWpcS1/9W+VahHSnMcmw==}
     peerDependencies:
       '@supabase/supabase-js': ^2.21.0
     dependencies:
@@ -619,17 +619,17 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@tabler/icons-svelte@2.32.0(svelte@4.2.0):
-    resolution: {integrity: sha512-hqJnogb6uRuVdq6iVgaItR2+VRixtGgPHiLh/TSx7R1Uljz8VwL+CLibaAJkg53KZBhlTrq3nqpUvoAPJBJhPw==}
+  /@tabler/icons-svelte@2.33.0(svelte@4.2.0):
+    resolution: {integrity: sha512-zJRW5o0bJGLS7nqoYt5OORurOo10hnynmiTZaoNBL9DxIiwyC+3bBT9rllDES1OYXp+1UCWrH2abAq3on94vMg==}
     peerDependencies:
       svelte: '>=3 <5'
     dependencies:
-      '@tabler/icons': 2.32.0
+      '@tabler/icons': 2.33.0
       svelte: 4.2.0
     dev: false
 
-  /@tabler/icons@2.32.0:
-    resolution: {integrity: sha512-w1oNvrnqFipoBEy2/0X4/IHo2aLsijuz4QRi/HizxqiaoMfmWG5X2DpEYTw9WnGvFmixpu/rtQsQAr7Wr0Mc2w==}
+  /@tabler/icons@2.33.0:
+    resolution: {integrity: sha512-cmVBeVANYGniLa0Q9gSUXU3SY0V9D3bfvHAq2bE+S0sdvnbMRNCHAmVQQv1lV6LT/aT7kzpwHAQz+6Iz1rPPsA==}
     dev: false
 
   /@types/cookie@0.5.1:

@@ -3,9 +3,9 @@
 		Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 	--font-mono: 'Fira Mono', monospace;
 	--bg-color: rgb(255, 255, 255);
-	--color-1: #006bf9;
+	--color-1: rgb(255, 11, 0);
 	--color-text: black;
-	--button-primary--color: #24b47e;
+	--button-primary-color: #24b47e;
 	--custom-color-secondary: #666;
 	--border-color: 1px solid #333;
 	--border-radius: 5px;
@@ -92,7 +92,7 @@ button:focus:not(:focus-visible) {
 
 @media (prefers-color-scheme: dark) {
 	:root {
-		--bg-color: rgb(24, 26, 27);
+		--bg-color: rgb(18, 18, 18);
 		--color-text: rgb(232, 230, 227);
 	}
 }
@@ -119,10 +119,11 @@ button:focus:not(:focus-visible) {
 	text-align: center;
 	font-size: 0.9rem;
 	text-transform: uppercase;
+	transition-duration: 300ms;
 
 	&.primary {
-		background-color: var(--button-primary--color);
-		border: 1px solid var(--button-primary--color);
+		background-color: var(--color-1);
+		border: 1px solid var(--color-1);
 		&:hover {
 			background-color: #2a2a2a;
 		}

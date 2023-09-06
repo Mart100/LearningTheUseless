@@ -18,7 +18,6 @@
 	let score = 0
 	let countryIdx = 0
 	let country: { code: string; name: string } | undefined
-	let countryFlagUrl = ''
 	let countryInput: HTMLInputElement
 	let restartBtn: HTMLButtonElement
 	let countryInputSuggestions: string[] = []
@@ -70,24 +69,6 @@
 		return { code: countryCode, name: country.name }
 	}
 
-	$: {
-		if (country) importFlag(country.code.toLowerCase()).then((url) => (countryFlagUrl = url))
-	}
-
-	function importFlag(code: string): Promise<string> {
-		return new Promise((resolve) => {
-			import.meta
-				.glob('$lib/svg/flags/**.svg', {})
-				[`/src/lib/svg/flags/${code}.svg`]()
-				.then((mod) => {
-					resolve((mod as any).default)
-				})
-				.catch(() => {
-					resolve('')
-				})
-		})
-	}
-
 	function formatTimeLeft(time: number) {
 		let minutes = Math.floor(time / 60)
 		let seconds = time % 60
@@ -132,7 +113,10 @@
 
 	function addMistake() {
 		if (!country) return
-		mistakes = [...mistakes, { name: country.name, flag: countryFlagUrl }]
+		mistakes = [
+			...mistakes,
+			{ name: country.name, flag: `/flags/${country.code.toLowerCase()}.svg` }
+		]
 
 		if (mistakes.length === 5) endGame()
 		else nextFlag()
@@ -232,7 +216,9 @@
 					{/if}
 				</div>
 			{:else if started}
-				<div id="flag"><img src={countryFlagUrl} alt="Country flag" /></div>
+				<div id="flag">
+					<img src="/flags/{country?.code.toLowerCase()}.svg" alt="Country flag" />
+				</div>
 				<div id="flagTime"><div class="inner" style="width:{flagTimeLeft}%" /></div>
 				<form autocomplete="off" class="inputForm" on:submit|preventDefault={onInputSubmit}>
 					<div class="autocomplete">

@@ -26,3 +26,18 @@ export interface GameStatsData {
 	}[]
 	highscore: number
 }
+
+export interface UserProfile {
+	id: string
+	username: string
+	avatar_url: string
+	following: string[]
+}
+
+export interface UserProfileFull {
+	id: string
+	username: string
+	avatar_url: string
+	followers: UserProfile[]
+	following: UserProfile[]
+}
