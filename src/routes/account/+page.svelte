@@ -2,7 +2,8 @@
 	import { enhance } from '$app/forms'
 
 	import Friends from './Friends.svelte'
-	import { IconFriends, IconClock } from '@tabler/icons-svelte'
+	import IconFriends from '~icons/tabler/friends'
+	import IconClock from '~icons/tabler/clock'
 
 	export let data
 

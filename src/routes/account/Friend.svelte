@@ -3,7 +3,8 @@
 	import type { SupabaseClient } from '@supabase/supabase-js'
 	import { createEventDispatcher } from 'svelte'
 
-	import { IconUserPlus, IconUserMinus, IconFriends } from '@tabler/icons-svelte'
+	import IconUserPlus from '~icons/tabler/user-plus'
+	import IconUserMinus from '~icons/tabler/user-minus'
 	import type { UserProfile, UserProfileFull } from '../../app'
 
 	export let supabase: SupabaseClient
@@ -45,15 +46,15 @@
 	<h2 class="username">{friend.username}</h2>
 	{#if following}
 		<button class="button primary" on:click={unfollowFriend}
-			><IconUserMinus size={18} /><span>Unfollow</span></button
+			><IconUserMinus font-size={18} /><span>Unfollow</span></button
 		>
 	{:else if follower}
 		<button class="button primary" on:click={followFriend}
-			><IconUserPlus size={18} /><span>Follow Back</span></button
+			><IconUserPlus font-size={18} /><span>Follow Back</span></button
 		>
 	{:else}
 		<button class="button primary" on:click={followFriend}
-			><IconUserPlus size={18} /><span>Follow</span></button
+			><IconUserPlus font-size={18} /><span>Follow</span></button
 		>
 	{/if}
 </div>
