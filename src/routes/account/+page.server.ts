@@ -24,7 +24,7 @@ export const load = async ({ locals: { supabase, getSession } }) => {
 	let { data: following } = await supabase
 		.from('profiles')
 		.select(`id, username, avatar_url, following`)
-		.eq('id', [profile.following])
+		.in('id', profile.following)
 	if (!following) following = []
 
 	return { session, profile, user: userResponse.data.user, followers, following }
