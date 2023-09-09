@@ -4,7 +4,7 @@
 
 	import GameStats from '$lib/components/GameStats.svelte'
 
-	import type { GameStatsData } from '../../app.js'
+	import type { GameLeaderboardFriend, GameStatsData } from '../../app.js'
 
 	export let data
 
@@ -89,21 +89,28 @@
 		}
 	}, 530)
 
-	let gameStats: GameStatsData | null | 'error' | 'loading' = 'loading'
-	if (data.streamed.gameStats)
-		data.streamed.gameStats
-			.then((stats) => {
-				gameStats = stats
-			})
-			.catch((error) => {
-				console.error(error)
-				gameStats = 'error'
-			})
-
+	let gameStatsStatus: 'guest' | 'loading' | 'error' | 'loaded' = 'guest'
+	let gameStats: GameStatsData | null = null
 	let globalGameStats: Record<string, number> | null = null
-	data.streamed.globalGameStats?.then((stats) => {
-		globalGameStats = stats
-	})
+	let friendsLeaderboardStats: GameLeaderboardFriend[] | null = null
+
+	if (session) gameStatsStatus = 'loading'
+
+	Promise.all([
+		data.streamed.gameStats,
+		data.streamed.globalGameStats,
+		data.streamed.friendsLeaderboard
+	])
+		.then(([stats, globalStats, friendsLeaderboard]) => {
+			gameStats = stats
+			globalGameStats = globalStats
+			friendsLeaderboardStats = friendsLeaderboard
+			if (stats) gameStatsStatus = 'loaded'
+		})
+		.catch((e) => {
+			console.error(e)
+			gameStatsStatus = 'error'
+		})
 </script>
 
 <svelte:head>
@@ -155,14 +162,19 @@
 		</div>
 	{/if}
 
-	{#if session === null}
+	{#if gameStatsStatus === 'guest'}
 		<div id="stats"><h2>Sign in to view/save and compare your scores!</h2></div>
-	{:else if gameStats === 'loading'}
+	{:else if gameStatsStatus === 'loading'}
 		<div id="stats"><h2>Loading stats...</h2></div>
-	{:else if gameStats === 'error'}
+	{:else if gameStatsStatus === 'error'}
 		<div id="stats"><h2>Error loading stats</h2></div>
-	{:else if gameStats && globalGameStats}
-		<GameStats stats={gameStats} globalStats={globalGameStats} />
+	{:else if gameStats && globalGameStats && friendsLeaderboardStats}
+		<GameStats
+			stats={gameStats}
+			globalStats={globalGameStats}
+			friendsLeaderboard={friendsLeaderboardStats}
+			{supabase}
+		/>
 	{/if}
 </div>
 

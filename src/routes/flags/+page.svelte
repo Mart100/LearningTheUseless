@@ -2,7 +2,7 @@
 	import { goto } from '$app/navigation'
 	import countryCodes from '$lib/countries.json'
 	import { onDestroy, tick } from 'svelte'
-	import type { GameStatsData } from '../../app.js'
+	import type { GameLeaderboardFriend, GameStatsData } from '../../app.js'
 	let countries = Object.values(countryCodes)
 
 	import GameStats from '$lib/components/GameStats.svelte'
@@ -169,13 +169,19 @@
 	let gameStatsStatus: 'guest' | 'loading' | 'error' | 'loaded' = 'guest'
 	let gameStats: GameStatsData | null = null
 	let globalGameStats: Record<string, number> | null = null
+	let friendsLeaderboardStats: GameLeaderboardFriend[] | null = null
 
 	if (session) gameStatsStatus = 'loading'
 
-	Promise.all([data.streamed.gameStats, data.streamed.globalGameStats])
-		.then(([stats, globalStats]) => {
+	Promise.all([
+		data.streamed.gameStats,
+		data.streamed.globalGameStats,
+		data.streamed.friendsLeaderboard
+	])
+		.then(([stats, globalStats, friendsLeaderboard]) => {
 			gameStats = stats
 			globalGameStats = globalStats
+			friendsLeaderboardStats = friendsLeaderboard
 			if (stats) gameStatsStatus = 'loaded'
 		})
 		.catch((e) => {
@@ -267,8 +273,13 @@
 		<div id="stats"><h2>Loading stats...</h2></div>
 	{:else if gameStatsStatus === 'error'}
 		<div id="stats"><h2>Error loading stats</h2></div>
-	{:else if gameStats && globalGameStats}
-		<GameStats stats={gameStats} globalStats={globalGameStats} />
+	{:else if gameStats && globalGameStats && friendsLeaderboardStats}
+		<GameStats
+			stats={gameStats}
+			globalStats={globalGameStats}
+			friendsLeaderboard={friendsLeaderboardStats}
+			{supabase}
+		/>
 	{/if}
 </div>
 

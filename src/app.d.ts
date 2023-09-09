@@ -41,3 +41,7 @@ export interface UserProfileFull {
 	followers: UserProfile[]
 	following: UserProfile[]
 }
+
+export interface GameLeaderboardFriend extends Omit<UserProfile, 'following'> {
+	highscore: number
+}

@@ -5,6 +5,7 @@ export const load = async ({ locals: { supabase, getSession } }) => {
 	const userResponse = await supabase.auth.getUser()
 
 	if (!session || !session.user || userResponse.data.user === null) {
+		console.log(session)
 		throw redirect(303, '/')
 	}
 

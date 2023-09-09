@@ -1,8 +1,22 @@
 <script lang="ts">
-	import type { GameStatsData } from '../../app'
+	import type { GameLeaderboardFriend, GameStatsData } from '../../app'
 
+	export let supabase: SupabaseClient
 	export let stats: GameStatsData
 	export let globalStats: Record<string, number>
+	export let friendsLeaderboard: GameLeaderboardFriend[]
+	let avatarsDownloaded = false
+
+	console.log(friendsLeaderboard)
+
+	if (!avatarsDownloaded) {
+		friendsLeaderboard.forEach(async (friend, index) => {
+			let url = friend.avatar_url + ''
+			friend.avatar_url = '/svg/default-avatar.svg'
+			downloadAvatar(supabase, url).then((u) => (friendsLeaderboard[index].avatar_url = u))
+		})
+		avatarsDownloaded = true
+	}
 
 	import { Line } from 'svelte-chartjs'
 	import type { ChartData, Point } from 'chart.js/auto'
@@ -14,6 +28,8 @@
 		LineElement,
 		Legend
 	} from 'chart.js'
+	import { downloadAvatar } from '$lib/utils'
+	import type { SupabaseClient } from '@supabase/supabase-js'
 	ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Legend)
 
 	let improvementGraphData: ChartData<'line', (number | Point)[], unknown>
@@ -62,9 +78,6 @@
 				yourScores[slice] += 1
 			}
 
-			console.log(globalStats)
-			console.log(scores, yourScores, maxScore)
-
 			let globalMax = Math.max(...scores)
 			scores = scores.map((score) => (score / globalMax) * 100)
 			let yourMax = Math.max(...yourScores)
@@ -91,7 +104,6 @@
 					}
 				]
 			}
-			console.log(statisticsGraphData)
 		}
 	}
 
@@ -153,6 +165,25 @@
 			<p>No highscore</p>
 		{/if}
 	</div>
+	<div id="leaderboard">
+		<h2>Leaderboard</h2>
+		<div class="slider">
+			<div class="friends"></div>
+			<div class="global"></div>
+		</div>
+		<div class="users">
+			{#each friendsLeaderboard as friend, index}
+				<div class="user">
+					<p class="rank">{index}</p>
+					<img class="avatar" src={friend.avatar_url} alt="avatar" />
+					<p class="username">{friend.username}</p>
+					<p class="score">{friend.highscore}</p>
+				</div>
+			{:else}
+				<div>You don't have any friends</div>
+			{/each}
+		</div>
+	</div>
 	<div id="graphs">
 		<div id="improvement">
 			<h2>Your Improvement</h2>
@@ -202,7 +233,7 @@
 
 		#previousGames {
 			text-align: left;
-			margin-left: auto;
+			//margin-left: auto;
 
 			p {
 				margin: 0;
@@ -221,9 +252,50 @@
 			}
 		}
 
+		#leaderboard {
+			.users {
+				max-height: 200px;
+				overflow-y: auto;
+				.user {
+					display: flex;
+					align-items: center;
+					margin-bottom: 1rem;
+
+					p {
+						margin: 0;
+					}
+
+					.rank {
+						font-size: 150%;
+						width: 10px;
+						margin: auto 1.5rem auto 0;
+						font-weight: 800;
+					}
+
+					.score {
+						font-size: 1.5rem;
+						margin: auto 0;
+						margin-left: auto;
+						margin-right: 1rem;
+					}
+
+					.avatar {
+						width: 2rem;
+						height: 2rem;
+						border-radius: 50%;
+						margin-right: 1rem;
+					}
+
+					.username {
+						font-weight: 900;
+					}
+				}
+			}
+		}
+
 		#highscore {
 			text-align: center;
-			margin-right: auto;
+			//margin-right: auto;
 
 			.score {
 				margin-top: 0;

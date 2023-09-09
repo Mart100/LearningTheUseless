@@ -82,25 +82,25 @@ export interface Database {
       }
       profiles: {
         Row: {
-          avatar_url: string | null
+          avatar_url: string
           following: string[]
           id: string
           updated_at: string | null
-          username: string | null
+          username: string
         }
         Insert: {
-          avatar_url?: string | null
+          avatar_url?: string
           following?: string[]
           id: string
           updated_at?: string | null
-          username?: string | null
+          username?: string
         }
         Update: {
-          avatar_url?: string | null
+          avatar_url?: string
           following?: string[]
           id?: string
           updated_at?: string | null
-          username?: string | null
+          username?: string
         }
         Relationships: [
           {

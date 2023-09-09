@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { enhance } from '$app/forms'
 
+	import { downloadAvatar } from '$lib/utils'
+
 	import Friends from './Friends.svelte'
 	import IconFriends from '~icons/tabler/friends'
 	import IconClock from '~icons/tabler/clock'
@@ -28,19 +30,7 @@
 		}
 	}
 
-	const downloadImage = async (path: string) => {
-		try {
-			const { data, error } = await supabase.storage.from('avatars').download(path)
-			if (error) throw error
-
-			const url = URL.createObjectURL(data)
-			avatarUrl = url
-		} catch (error) {
-			if (error instanceof Error) console.log('Error downloading image: ', error.message)
-		}
-	}
-
-	$: if (avatar) downloadImage(avatar)
+	$: if (avatar) downloadAvatar(supabase, avatar).then((u) => (avatarUrl = u))
 </script>
 
 <div class="account">
