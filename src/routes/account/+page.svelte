@@ -33,72 +33,78 @@
 	$: if (avatar) downloadAvatar(supabase, avatar).then((u) => (avatarUrl = u))
 </script>
 
+<svelte:head>
+	<title>Account — Learning the Useless</title>
+</svelte:head>
+
 <div class="account">
-	<div class="user">
+	<div class="user-header">
 		<div class="left">
 			<h1 class="username">{username}</h1>
-			<h2 class="friends"><IconClock /><span>Joined {createdAtString}</span></h2>
-			<h2 class="friends">
-				<IconFriends /><span>{following.length} Following / {followers.length} Followers</span>
-			</h2>
+			<p class="meta"><IconClock /> Joined {createdAtString}</p>
+			<p class="meta"><IconFriends /> {following.length} following · {followers.length} followers</p>
 		</div>
-		<div class="right">
+		{#if avatarUrl}
 			<img class="avatar" src={avatarUrl} alt="avatar" />
-		</div>
+		{/if}
 	</div>
-	<div class="buttons">
-		<a class="button" href="account/edit">Edit Profile</a>
+
+	<div class="actions">
+		<a class="button" href="account/edit">Edit profile</a>
 		<form method="post" action="?/signout" use:enhance={handleSignOut}>
-			<div>
-				<button class="button" disabled={signOutLoading}>Sign Out</button>
-			</div>
+			<button class="button" disabled={signOutLoading}>Sign out</button>
 		</form>
 	</div>
+
 	<hr />
 	<Friends user={{ ...profile, followers, following }} {supabase} />
-	<hr />
 </div>
 
 <style lang="scss">
 	.account {
-		max-width: 600px;
-		width: 100%;
-		margin: 0 auto;
+		max-width: 560px;
 
-		> .user {
-			text-align: left;
-			display: flex;
-			justify-content: space-between;
-			max-width: 100%;
-
-			.username {
-				margin: 0;
-				font-size: 1.5rem;
-				text-align: left;
-				font-weight: 900;
-			}
-
-			.avatar {
-				border-radius: 20%;
-				height: 7em;
-			}
-
-			h2 {
-				font-size: 1.1rem;
-				display: flex;
-				align-items: center;
-
-				span {
-					margin-left: 1rem;
-				}
-			}
+		hr {
+			border: none;
+			border-top: 1px solid var(--border);
+			margin: 1.5rem 0;
 		}
+	}
 
-		.buttons {
-			display: flex;
-			justify-content: space-between;
-			margin-top: 1rem;
-			text-decoration: none;
-		}
+	.user-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		margin-bottom: 1.25rem;
+	}
+
+	.username {
+		font-size: 1.375rem;
+		font-weight: 700;
+		margin: 0 0 0.4rem;
+		text-align: left;
+	}
+
+	.meta {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.875rem;
+		color: var(--fg-muted);
+		margin: 0 0 0.25rem;
+	}
+
+	.avatar {
+		width: 5rem;
+		height: 5rem;
+		border-radius: 8px;
+		object-fit: cover;
+		flex-shrink: 0;
+	}
+
+	.actions {
+		display: flex;
+		gap: 0.75rem;
+		margin-bottom: 1.5rem;
 	}
 </style>

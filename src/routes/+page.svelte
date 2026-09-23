@@ -1,69 +1,96 @@
-<script>
-	import GameTile from '$lib/components/GameTile.svelte'
-	import logo from '$lib/images/logo.png'
-
-	import flagRegular from '$lib/svg/flag-icon.svg'
-	import piSvg from '$lib/svg/Pi-icon.svg'
-</script>
-
 <svelte:head>
-	<title>Learning The Useless</title>
-	<meta name="description" content="Svelte demo app" />
+	<title>Learning the Useless</title>
+	<meta
+		name="description"
+		content="Memorize digits of π and country flags. No practical use whatsoever."
+	/>
 </svelte:head>
 
-<section>
-	<h1>
-		<img id="logo" src={logo} alt="logo" />
-		<span class="welcome">Welcome</span>
-		<p>to the place to learn useless things!</p>
-	</h1>
-	<div class="games">
-		<GameTile
-			title="Digits of PI"
-			href="./pi"
-			description="Learn and test your knowledge of the digits of PI"
-			svg={piSvg}
-		/>
-		<GameTile
-			title="Flags"
-			href="./flags"
-			description="Learn the flags of all countries in the world"
-			svg={flagRegular}
-		/>
-	</div>
-</section>
+<div class="home">
+	<p class="tagline">Memorize digits of π and country flags. No practical use whatsoever.</p>
+
+	<ul class="game-list" role="list">
+		<li>
+			<a href="/pi" class="game-row">
+				<div class="game-info">
+					<span class="game-name">Digits of Pi</span>
+					<span class="game-desc">How many digits of π can you type from memory?</span>
+				</div>
+				<span class="game-cta" aria-hidden="true">Play →</span>
+			</a>
+		</li>
+		<li>
+			<a href="/flags" class="game-row">
+				<div class="game-info">
+					<span class="game-name">Country Flags</span>
+					<span class="game-desc">Name every country's flag. Five minutes on the clock.</span>
+				</div>
+				<span class="game-cta" aria-hidden="true">Play →</span>
+			</a>
+		</li>
+	</ul>
+</div>
 
 <style>
-	section {
+	.home {
+		padding-top: 2rem;
+	}
+
+	.tagline {
+		color: var(--fg-muted);
+		font-size: 0.95rem;
+		margin-bottom: 2.5rem;
+	}
+
+	.game-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		border-top: 1px solid var(--border);
+	}
+
+	.game-list li {
+		border-bottom: 1px solid var(--border);
+	}
+
+	.game-row {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		padding: 1.25rem 0;
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.game-row:hover {
+		opacity: 1;
+	}
+
+	.game-row:hover .game-name {
+		text-decoration: underline;
+		text-underline-offset: 2px;
+	}
+
+	.game-info {
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		flex: 0.6;
+		gap: 0.2rem;
+		flex: 1;
 	}
 
-	h1 {
-		width: 100%;
+	.game-name {
+		font-size: 1rem;
+		font-weight: 600;
 	}
 
-	.welcome {
-		display: block;
-		position: relative;
-		width: 100%;
-		height: 0;
-		font-size: 4rem;
-		padding: 0 0 10% 0;
+	.game-desc {
+		font-size: 0.875rem;
+		color: var(--fg-muted);
 	}
 
-	#logo {
-		margin: auto;
-		display: block;
-	}
-
-	.games {
-		display: flex;
-		flex-wrap: wrap;
-		flex-direction: row;
-		justify-content: space-around;
+	.game-cta {
+		font-size: 0.875rem;
+		color: var(--fg-subtle);
+		flex-shrink: 0;
 	}
 </style>

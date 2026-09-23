@@ -32,7 +32,6 @@
 		timeLeft = 5 * 60
 		flagTimeLeft = 100
 
-		// shuffle countries then sort on popularity
 		countries.sort(() => Math.random() - 0.5).sort((a, b) => b.popularity - a.popularity)
 
 		nextFlag()
@@ -102,7 +101,6 @@
 		if (!country) return
 
 		let inputValue = countryInput.value
-		console.log(inputValue, country.name)
 		if (inputValue.toLowerCase() === country.name.toLowerCase()) {
 			score++
 			nextFlag()
@@ -191,88 +189,93 @@
 </script>
 
 <svelte:head>
-	<title>Learn Flags</title>
-	<meta name="description" content="Learn All the country flags on this page" />
+	<title>Country Flags</title>
+	<meta name="description" content="Name every country's flag. Five minutes on the clock." />
 </svelte:head>
 
-<div class="column">
-	<div class="center">
-		<h1>Flags game</h1>
-		{#if !started && !ended}
-			<button on:click={startGame} id="startBtn" class="button primary">PLAY</button>
-		{:else}
-			<div id="topInfo">
-				<div id="time">Time:<br /> {formatTimeLeft(timeLeft)}</div>
-				<div id="score">Score:<br /> {score}</div>
-			</div>
-			{#if ended}
-				<h2>Game over!</h2>
-				<div id="bottomButtonRow">
-					<button id="restart" class="button" on:click={restartGame} bind:this={restartBtn}
-						>Try again</button
+<div class="page">
+	<h1>Country Flags</h1>
+
+	{#if !started && !ended}
+		<button on:click={startGame} id="startBtn" class="button primary">Start</button>
+	{:else}
+		<div id="topInfo">
+			<span>{formatTimeLeft(timeLeft)}</span>
+			<span class="score-display">{score} correct</span>
+		</div>
+
+		{#if ended}
+			<p class="game-over">Time's up — {score} flags named.</p>
+			<div class="button-row">
+				<button id="restart" class="button" on:click={restartGame} bind:this={restartBtn}>
+					Try again
+				</button>
+				{#if scoreSavingStatus !== 'saved'}
+					<button
+						id="saveScore"
+						class="button primary"
+						on:click={saveScore}
+						disabled={scoreSavingStatus === 'saving'}
 					>
-					{#if scoreSavingStatus !== 'saved'}
-						<button
-							id="saveScore"
-							class="button primary"
-							on:click={saveScore}
-							disabled={scoreSavingStatus === 'saving'}
-							>{scoreSavingStatus !== 'saving' ? 'Save Score' : 'Saving...'}</button
-						>
+						{scoreSavingStatus !== 'saving' ? 'Save score' : 'Saving…'}
+					</button>
+				{/if}
+			</div>
+		{:else if started}
+			<div id="flag">
+				<img src="/flags/{country?.code.toLowerCase()}.svg" alt="Country flag" />
+			</div>
+			<div id="flagTime"><div class="inner" style="width:{flagTimeLeft}%" /></div>
+
+			<form autocomplete="off" class="inputForm" on:submit|preventDefault={onInputSubmit}>
+				<div class="autocomplete">
+					<input
+						id="countryInput"
+						class="input"
+						type="text"
+						autocapitalize="off"
+						autocomplete="off"
+						autocorrect="off"
+						placeholder="Country name"
+						spellcheck="false"
+						data-form-type="other"
+						bind:this={countryInput}
+						on:keydown={onInputKeypress}
+					/>
+					{#if countryInputSuggestions.length > 0}
+						<div class="suggestions">
+							{#each countryInputSuggestions.slice(0, 5) as suggestion}
+								<!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
+								<div on:click={onSuggestionClick}>{suggestion}</div>
+							{/each}
+						</div>
 					{/if}
 				</div>
-			{:else if started}
-				<div id="flag">
-					<img src="/flags/{country?.code.toLowerCase()}.svg" alt="Country flag" />
-				</div>
-				<div id="flagTime"><div class="inner" style="width:{flagTimeLeft}%" /></div>
-				<form autocomplete="off" class="inputForm" on:submit|preventDefault={onInputSubmit}>
-					<div class="autocomplete">
-						<input
-							id="countryInput"
-							class="input"
-							type="text"
-							autocapitalize="off"
-							autocomplete="off"
-							autocorrect="off"
-							placeholder="Country name"
-							spellcheck="false"
-							data-form-type="other"
-							bind:this={countryInput}
-							on:keydown={onInputKeypress}
-						/>
-						{#if countryInputSuggestions.length > 0}
-							<div class="suggestions">
-								{#each countryInputSuggestions.slice(0, 5) as suggestion}
-									<!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
-									<div on:click={onSuggestionClick}>{suggestion}</div>
-								{/each}
-							</div>
-						{/if}
-					</div>
-					<input type="submit" class="button submit primary" />
-				</form>
-			{/if}
+				<input type="submit" class="button submit primary" value="→" />
+			</form>
 		{/if}
-	</div>
+	{/if}
 
 	{#if mistakes.length > 0}
-		<h2 class="mistakesTitle">Mistakes ({mistakes.length}/5)</h2>
-		<div class="mistakes">
-			{#each mistakes as mistake}
-				<div class="mistake">
-					<span class="name">{mistake.name}</span>
-					<img src={mistake.flag} alt="Country flag" />
-				</div>
-			{/each}
+		<div class="mistakes-section">
+			<h2>Missed ({mistakes.length}/5)</h2>
+			<div class="mistakes">
+				{#each mistakes as mistake}
+					<div class="mistake">
+						<img src={mistake.flag} alt={mistake.name} />
+						<span>{mistake.name}</span>
+					</div>
+				{/each}
+			</div>
 		</div>
 	{/if}
+
 	{#if gameStatsStatus === 'guest'}
-		<div id="stats"><h2>Sign in to view/save and compare your scores!</h2></div>
+		<p class="stats-nudge"><a href="/signup">Sign in</a> to save and compare scores.</p>
 	{:else if gameStatsStatus === 'loading'}
-		<div id="stats"><h2>Loading stats...</h2></div>
+		<p class="stats-nudge">Loading stats…</p>
 	{:else if gameStatsStatus === 'error'}
-		<div id="stats"><h2>Error loading stats</h2></div>
+		<p class="stats-nudge">Couldn't load stats.</p>
 	{:else if gameStats && globalGameStats && friendsLeaderboardStats}
 		<GameStats
 			stats={gameStats}
@@ -283,131 +286,157 @@
 	{/if}
 </div>
 
-<style lang="scss">
-	.column {
+<style>
+	.page {
 		display: flex;
 		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		margin-top: 10vh;
+		align-items: flex-start;
+	}
 
-		.center {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: center;
-		}
+	h1 {
+		margin-bottom: 1.5rem;
 	}
 
 	#startBtn {
-		text-align: center;
-		display: inline-block;
-		font-size: 20px;
-		font-weight: 500;
-		padding: 15px 32px;
-	}
-
-	.button {
-		font-size: 16px;
-	}
-
-	.inputForm {
-		display: flex;
-		flex-direction: row;
-		align-items: flex-start;
-		justify-content: center;
-
-		.autocomplete {
-			position: relative;
-			width: 300px;
-			height: 40px;
-			margin-bottom: 20px;
-
-			#countryInput {
-				width: 300px;
-				height: 40px;
-				font-size: 20px;
-				text-align: center;
-			}
-
-			.suggestions {
-				position: absolute;
-				top: 100%;
-				left: 0;
-				width: 100%;
-				border: 1px solid black;
-				background-color: var(--bg-color);
-				border-top: none;
-				z-index: 1;
-
-				div {
-					padding: 5px;
-					cursor: pointer;
-
-					&:hover {
-						background-color: rgba(200, 200, 200, 0.1);
-					}
-				}
-			}
-		}
-
-		.submit {
-			cursor: pointer;
-			height: 40px;
-		}
-	}
-
-	#flagTime {
-		width: 300px;
-		height: 10px;
-		position: relative;
-		text-align: center;
-
-		.inner {
-			position: relative;
-			height: 100%;
-			margin: auto;
-			background-color: white;
-		}
+		font-size: 1rem;
+		padding: 0.6rem 1.75rem;
 	}
 
 	#topInfo {
 		display: flex;
-		justify-content: space-around;
-		width: 300px;
-		margin-bottom: 20px;
+		gap: 2rem;
+		align-items: baseline;
+		margin-bottom: 1.25rem;
+		font-size: 1.25rem;
+		font-weight: 600;
+		font-variant-numeric: tabular-nums;
+	}
 
-		div {
-			font-size: 30px;
-			text-align: center;
-		}
+	.score-display {
+		color: var(--fg-muted);
+		font-weight: 400;
+		font-size: 1rem;
+	}
+
+	.game-over {
+		font-size: 1rem;
+		color: var(--fg-muted);
+		margin-bottom: 1rem;
+	}
+
+	.button-row {
+		display: flex;
+		gap: 0.75rem;
+		flex-wrap: wrap;
+		margin-bottom: 2rem;
 	}
 
 	#flag {
-		width: 200px;
+		width: 180px;
+		margin-bottom: 0.5rem;
 	}
 
-	.mistakesTitle {
-		font-size: 30px;
+	#flag img {
+		width: 100%;
+		display: block;
+		border: 1px solid var(--border);
+	}
+
+	#flagTime {
+		width: 180px;
+		height: 3px;
+		background: var(--border);
+		margin-bottom: 1rem;
+		border-radius: 2px;
+		overflow: hidden;
+	}
+
+	#flagTime .inner {
+		height: 100%;
+		background: var(--fg);
+		transition: width 0.08s linear;
+	}
+
+	.inputForm {
+		display: flex;
+		gap: 0.5rem;
+		align-items: flex-start;
+		margin-bottom: 0.5rem;
+	}
+
+	.autocomplete {
+		position: relative;
+		width: 280px;
+	}
+
+	.autocomplete input {
+		width: 100%;
+	}
+
+	.suggestions {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		width: 100%;
+		border: 1px solid var(--border);
+		border-top: none;
+		background: var(--bg);
+		z-index: 10;
+		border-radius: 0 0 4px 4px;
+	}
+
+	.suggestions div {
+		padding: 0.4rem 0.75rem;
+		cursor: pointer;
+		font-size: 0.875rem;
+	}
+
+	.suggestions div:hover {
+		background: var(--bg-inset);
+	}
+
+	.submit {
+		cursor: pointer;
+		height: 38px;
+		padding: 0 1rem;
+	}
+
+	.mistakes-section {
+		margin-top: 2rem;
+	}
+
+	.mistakes-section h2 {
+		margin-bottom: 0.75rem;
 	}
 
 	.mistakes {
 		display: flex;
-		flex-direction: row;
+		flex-wrap: wrap;
+		gap: 1rem;
+	}
 
-		.mistake {
-			margin: 5px;
-			font-size: 80%;
+	.mistake {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.35rem;
+	}
 
-			.name {
-				display: block;
-				text-align: center;
-				margin-bottom: 5px;
-			}
+	.mistake img {
+		width: 80px;
+		border: 1px solid var(--border);
+	}
 
-			img {
-				width: 100px;
-			}
-		}
+	.mistake span {
+		font-size: 0.75rem;
+		color: var(--fg-muted);
+		text-align: center;
+		max-width: 80px;
+	}
+
+	.stats-nudge {
+		margin-top: 2rem;
+		font-size: 0.875rem;
+		color: var(--fg-muted);
 	}
 </style>

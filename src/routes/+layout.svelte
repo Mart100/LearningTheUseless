@@ -34,17 +34,22 @@
 		display: flex;
 		flex-direction: column;
 		min-height: 100vh;
-		width: 100%;
 	}
 
 	main {
 		flex: 1;
 		display: flex;
 		flex-direction: column;
-		padding: 1rem;
+		padding: 2.5rem 1.5rem;
 		width: 100%;
-		max-width: 64rem;
+		max-width: 56rem;
 		margin: 0 auto;
 		box-sizing: border-box;
+	}
+
+	@media (max-width: 480px) {
+		main {
+			padding: 1.5rem 1rem;
+		}
 	}
 </style>

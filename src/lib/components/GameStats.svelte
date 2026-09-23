@@ -7,8 +7,6 @@
 	export let friendsLeaderboard: GameLeaderboardFriend[]
 	let avatarsDownloaded = false
 
-	console.log(friendsLeaderboard)
-
 	if (!avatarsDownloaded) {
 		friendsLeaderboard.forEach(async (friend, index) => {
 			let url = friend.avatar_url + ''
@@ -71,7 +69,6 @@
 				if (globalStats[i]) scores[slice] += globalStats[i]
 			}
 
-			// create array with all 0 of the same length as scores
 			let yourScores: number[] = Array.from({ length: scores.length }, () => 0)
 			for (let score of stats.previousGames) {
 				let slice = Math.round(score.score / stepSize)
@@ -98,7 +95,7 @@
 						label: 'You',
 						data: yourScores,
 						fill: false,
-						borderColor: 'rgb(255, 0, 0)',
+						borderColor: 'rgb(200, 80, 80)',
 						tension: 0.5,
 						pointRadius: 0
 					}
@@ -132,21 +129,25 @@
 </script>
 
 <div id="stats">
-	<div id="previousGames">
-		<h2>Previous Scores</h2>
+	<div id="highscore">
+		<h2>Best</h2>
+		{#if stats && stats.highscore}
+			<p class="score">{stats.highscore}</p>
+		{:else}
+			<p class="no-data">No scores yet</p>
+		{/if}
+	</div>
 
+	<div id="previousGames">
+		<h2>Recent games</h2>
 		{#if stats && stats.previousGames.length > 0}
 			<table>
 				<tbody>
-					<tr>
-						<th>Date</th>
-						<th>Score</th>
-					</tr>
 					{#each stats.previousGames.slice(0, 5) as game}
 						<tr>
 							<td class="date">
-								<p class="timeago">{dbTimestampToHowlongago(game.played_at)}</p>
-								<p class="time">{dbTimestampToString(game.played_at)}</p>
+								<span class="timeago">{dbTimestampToHowlongago(game.played_at)}</span>
+								<span class="time">{dbTimestampToString(game.played_at)}</span>
 							</td>
 							<td class="score">{game.score}</td>
 						</tr>
@@ -154,40 +155,30 @@
 				</tbody>
 			</table>
 		{:else}
-			<p>No previous games</p>
+			<p class="no-data">No previous games</p>
 		{/if}
 	</div>
-	<div id="highscore">
-		<h2>Highscore</h2>
-		{#if stats && stats.highscore}
-			<p class="score">{stats.highscore}</p>
-		{:else}
-			<p>No highscore</p>
-		{/if}
-	</div>
-	<div id="leaderboard">
-		<h2>Leaderboard</h2>
-		<div class="slider">
-			<div class="friends"></div>
-			<div class="global"></div>
+
+	{#if friendsLeaderboard.length > 0}
+		<div id="leaderboard">
+			<h2>Friends</h2>
+			<div class="users">
+				{#each friendsLeaderboard as friend, index}
+					<div class="user">
+						<span class="rank">{index + 1}</span>
+						<img class="avatar" src={friend.avatar_url} alt="avatar" />
+						<span class="username">{friend.username}</span>
+						<span class="score">{friend.highscore}</span>
+					</div>
+				{/each}
+			</div>
 		</div>
-		<div class="users">
-			{#each friendsLeaderboard as friend, index}
-				<div class="user">
-					<p class="rank">{index}</p>
-					<img class="avatar" src={friend.avatar_url} alt="avatar" />
-					<p class="username">{friend.username}</p>
-					<p class="score">{friend.highscore}</p>
-				</div>
-			{:else}
-				<div>You don't have any friends</div>
-			{/each}
-		</div>
-	</div>
+	{/if}
+
 	<div id="graphs">
-		<div id="improvement">
-			<h2>Your Improvement</h2>
-			{#if improvementGraphData}
+		{#if improvementGraphData}
+			<div class="graph-block">
+				<h2>Your improvement</h2>
 				<Line
 					data={improvementGraphData}
 					width={200}
@@ -198,125 +189,145 @@
 						plugins: { legend: { display: false } }
 					}}
 				/>
-			{/if}
-		</div>
-		<div id="statistics">
-			<h2>Global scores</h2>
-			{#if statisticsGraphData}
+			</div>
+		{/if}
+		{#if statisticsGraphData}
+			<div class="graph-block">
+				<h2>Score distribution</h2>
 				<Line
 					data={statisticsGraphData}
 					width={200}
 					height={100}
 					options={{ maintainAspectRatio: true, scales: { y: { display: false, grace: 1 } } }}
 				/>
-			{/if}
-		</div>
+			</div>
+		{/if}
 	</div>
 </div>
 
 <style lang="scss">
 	#stats {
-		margin-top: 10vh;
+		margin-top: 2.5rem;
+		padding-top: 2rem;
+		border-top: 1px solid var(--border);
 		display: flex;
 		flex-wrap: wrap;
-		justify-content: center;
+		gap: 2rem;
 		width: 100%;
 
 		h2 {
-			font-size: 1.5rem;
+			font-size: 0.8rem;
+			text-transform: uppercase;
+			letter-spacing: 0.06em;
+			color: var(--fg-muted);
+			margin-bottom: 0.75rem;
+		}
+	}
+
+	.no-data {
+		color: var(--fg-subtle);
+		font-size: 0.875rem;
+	}
+
+	#highscore {
+		.score {
+			font-size: 3rem;
+			font-weight: 700;
+			line-height: 1;
+			margin: 0;
+			font-variant-numeric: tabular-nums;
+		}
+	}
+
+	#previousGames {
+		table {
+			border-collapse: collapse;
+			font-size: 0.875rem;
 		}
 
-		> div {
-			display: inline-block;
-			margin: 0 2vw;
+		tr + tr td {
+			border-top: 1px solid var(--border);
 		}
 
-		#previousGames {
-			text-align: left;
-			//margin-left: auto;
+		td {
+			padding: 0.4rem 0.5rem;
+			vertical-align: middle;
 
-			p {
-				margin: 0;
-			}
-
-			.date {
-				.time {
-					font-size: 0.8rem;
-					color: gray;
-				}
-			}
-
-			.score {
-				font-size: 1.5rem;
-				text-align: right;
-			}
-		}
-
-		#leaderboard {
-			.users {
-				max-height: 200px;
-				overflow-y: auto;
-				.user {
-					display: flex;
-					align-items: center;
-					margin-bottom: 1rem;
-
-					p {
-						margin: 0;
-					}
-
-					.rank {
-						font-size: 150%;
-						width: 10px;
-						margin: auto 1.5rem auto 0;
-						font-weight: 800;
-					}
-
-					.score {
-						font-size: 1.5rem;
-						margin: auto 0;
-						margin-left: auto;
-						margin-right: 1rem;
-					}
-
-					.avatar {
-						width: 2rem;
-						height: 2rem;
-						border-radius: 50%;
-						margin-right: 1rem;
-					}
-
-					.username {
-						font-weight: 900;
-					}
-				}
+			&:first-child {
+				padding-left: 0;
 			}
 		}
 
-		#highscore {
-			text-align: center;
-			//margin-right: auto;
-
-			.score {
-				margin-top: 0;
-				font-size: 4rem;
-				font-weight: bold;
-			}
-		}
-
-		#graphs {
-			margin: 0px;
+		.date {
 			display: flex;
-			flex-wrap: wrap;
-			justify-content: center;
-			text-align: center;
+			flex-direction: column;
 
-			div {
-				display: inline-block;
-				width: 90%;
-				max-width: 400px;
-				margin: 0 2vw;
+			.timeago {
+				font-size: 0.875rem;
 			}
+
+			.time {
+				font-size: 0.75rem;
+				color: var(--fg-muted);
+			}
+		}
+
+		.score {
+			font-weight: 600;
+			font-variant-numeric: tabular-nums;
+			padding-left: 1.5rem;
+		}
+	}
+
+	#leaderboard {
+		.users {
+			display: flex;
+			flex-direction: column;
+			gap: 0.6rem;
+		}
+
+		.user {
+			display: flex;
+			align-items: center;
+			gap: 0.75rem;
+			font-size: 0.875rem;
+
+			.rank {
+				width: 1.25rem;
+				text-align: right;
+				color: var(--fg-muted);
+				font-size: 0.8rem;
+			}
+
+			.avatar {
+				width: 1.75rem;
+				height: 1.75rem;
+				border-radius: 50%;
+				object-fit: cover;
+			}
+
+			.username {
+				font-weight: 600;
+			}
+
+			.score {
+				margin-left: auto;
+				font-variant-numeric: tabular-nums;
+				color: var(--fg-muted);
+			}
+		}
+	}
+
+	#graphs {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1.5rem;
+		width: 100%;
+
+		.graph-block {
+			flex: 1;
+			min-width: 200px;
+			max-width: 380px;
 		}
 	}
 </style>

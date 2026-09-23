@@ -1,12 +1,10 @@
-<!-- src/routes/+page.svelte -->
+<!-- src/routes/signup/+page.svelte -->
 <script lang="ts">
 	import { Auth } from '@supabase/auth-ui-svelte'
 	import { ThemeSupa } from '@supabase/auth-ui-shared'
 	import { goto } from '$app/navigation'
 
 	export let data
-
-	console.log(data.url)
 
 	$: {
 		if (data.session) {
@@ -16,30 +14,58 @@
 </script>
 
 <svelte:head>
-	<title>User Management</title>
+	<title>Sign in — Learning the Useless</title>
 </svelte:head>
 
-<div class="column">
-	<Auth
-		supabaseClient={data.supabase}
-		view="sign_up"
-		redirectTo={`${data.url}/auth/callback`}
-		showLinks={true}
-		appearance={{
-			theme: ThemeSupa,
-			style: { input: 'color: #fff' }
-		}}
+<div class="auth-page">
+	<h1>Sign in</h1>
+	<p class="sub">Save scores and see how you compare.</p>
+	<div class="auth-box">
+		<Auth
+			supabaseClient={data.supabase}
+			view="sign_up"
+			redirectTo={`${data.url}/auth/callback`}
+			showLinks={true}
+			appearance={{
+				theme: ThemeSupa,
+				variables: {
+					default: {
+						colors: {
+							brand: '#1c1c1a',
+							brandAccent: '#444',
+							inputBackground: 'transparent',
+							inputBorder: 'var(--border)',
+							inputBorderFocus: 'var(--fg)',
+							inputText: 'var(--fg)',
+							inputPlaceholder: 'var(--fg-muted)'
+						}
+					}
+				}
+			}}
 		socialLayout="horizontal"
-		theme="dark"
 		additionalData={{ provider: 'google' }}
 		providers={['google', 'discord']}
-	/>
+		/>
+	</div>
 </div>
 
-<style lang="scss">
-	.column {
-		display: block;
-		width: 50%;
-		margin: 5% auto 0 auto;
+<style>
+	.auth-page {
+		max-width: 360px;
+		padding-top: 1rem;
+	}
+
+	h1 {
+		margin-bottom: 0.25rem;
+	}
+
+	.sub {
+		color: var(--fg-muted);
+		font-size: 0.875rem;
+		margin-bottom: 1.75rem;
+	}
+
+	.auth-box {
+		width: 100%;
 	}
 </style>
