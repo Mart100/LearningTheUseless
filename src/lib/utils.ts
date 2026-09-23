@@ -2,7 +2,8 @@ import type { SupabaseClient } from '@supabase/supabase-js'
 
 const avatarCache = new Map<string, string>()
 
-export const downloadAvatar = async (supabase: SupabaseClient, path: string) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const downloadAvatar = async (supabase: any, path: string) => {
 	if (path === '/svg/default-avatar.svg') return path
 	if (path.startsWith('https://')) return path
 	if (avatarCache.has(path)) return avatarCache.get(path)!

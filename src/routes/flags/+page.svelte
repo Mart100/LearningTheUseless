@@ -23,7 +23,7 @@
 	let countryInputSuggestions: string[] = []
 	let mistakes: { name: string; flag: string }[] = []
 
-	let interval: NodeJS.Timeout
+	let interval: ReturnType<typeof setInterval>
 
 	async function startGame() {
 		score = 0
@@ -189,8 +189,16 @@
 </script>
 
 <svelte:head>
-	<title>Country Flags</title>
+	<title>World Flags — Learning The Useless</title>
 	<meta name="description" content="Name every country's flag. Five minutes on the clock." />
+	<meta property="og:title" content="World Flags — Learning The Useless" />
+	<meta
+		property="og:description"
+		content="Name every country flag before the timer runs out. Train your vexillology — flags quiz with leaderboards."
+	/>
+	<meta property="og:type" content="website" />
+	<meta property="og:image" content="/og-image.svg" />
+	<meta name="twitter:card" content="summary_large_image" />
 </svelte:head>
 
 <div class="page">
@@ -225,7 +233,7 @@
 			<div id="flag">
 				<img src="/flags/{country?.code.toLowerCase()}.svg" alt="Country flag" />
 			</div>
-			<div id="flagTime"><div class="inner" style="width:{flagTimeLeft}%" /></div>
+			<div id="flagTime"><div class="inner" style="width:{flagTimeLeft}%"></div></div>
 
 			<form autocomplete="off" class="inputForm" on:submit|preventDefault={onInputSubmit}>
 				<div class="autocomplete">

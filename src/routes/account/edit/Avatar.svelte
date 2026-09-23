@@ -57,7 +57,7 @@
 			style="height: 10em; width: 10em;"
 		/>
 	{:else}
-		<div class="avatar no-image" style="height: 10em; width: 10em;" />
+		<div class="avatar no-image" style="height: 10em; width: 10em;"></div>
 	{/if}
 	<input type="hidden" name="avatarUrl" value={url} />
 

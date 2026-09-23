@@ -1,12 +1,13 @@
-import type { Session, SupabaseClient } from '@supabase/supabase-js'
+import type { Session } from '@supabase/supabase-js'
 import type { GameLeaderboardFriend, GameStatsData } from '../app'
 import type { Database } from '../database.types'
 
-type Game = 'pi' | 'flags' //| 'capitals'
+type Game = 'pi' | 'flags'
 type GameTable = `game_${Game}`
 
 export async function fetchAllGameStats(
-	supabase: SupabaseClient<Database>,
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	supabase: any,
 	session: Session | null,
 	game: Game
 ) {
@@ -19,7 +20,7 @@ export async function fetchAllGameStats(
 
 async function fetchFriendsLeaderboard(
 	session: Session | null,
-	supabase: SupabaseClient<Database>,
+	supabase: any,
 	game: Game
 ): Promise<GameLeaderboardFriend[] | null> {
 	if (!session) return null
@@ -42,7 +43,7 @@ async function fetchFriendsLeaderboard(
 	}
 
 	const highscores = data.reduce(
-		(acc, curr) => {
+		(acc: Record<string, number>, curr: { user_id: string; score: number }) => {
 			if (acc[curr.user_id] == null) {
 				acc[curr.user_id] = curr.score
 			} else {
@@ -67,19 +68,21 @@ async function fetchFriendsLeaderboard(
 		return null
 	}
 
-	const friends: GameLeaderboardFriend[] = following.map((friend) => {
-		return {
-			...friend,
-			highscore: highscores[friend.id] ?? 0
+	const friends: GameLeaderboardFriend[] = following.map(
+		(friend: { id: string; username: string; avatar_url: string; following: string[] }) => {
+			return {
+				...friend,
+				highscore: highscores[friend.id] ?? 0
+			}
 		}
-	})
+	)
 
 	friends.sort((a, b) => b.highscore - a.highscore)
 
 	return friends
 }
 
-async function fetchProfile(session: Session | null, supabase: SupabaseClient<Database>) {
+async function fetchProfile(session: Session | null, supabase: any) {
 	if (!session) return null
 
 	const { data, error } = await supabase
@@ -96,7 +99,7 @@ async function fetchProfile(session: Session | null, supabase: SupabaseClient<Da
 	return data
 }
 
-async function fetchGlobalGameStats(supabase: SupabaseClient<Database>, game: Game) {
+async function fetchGlobalGameStats(supabase: any, game: Game) {
 	const { data, error } = await supabase.from(`game_stats`).select().eq('game', game)
 	if (error) {
 		console.error(error)
@@ -108,7 +111,7 @@ async function fetchGlobalGameStats(supabase: SupabaseClient<Database>, game: Ga
 
 async function fetchGameStats(
 	session: Session | null,
-	supabase: SupabaseClient<Database>,
+	supabase: any,
 	game: Game
 ) {
 	if (session == null) return null
@@ -131,7 +134,7 @@ async function fetchGameStats(
 		} else {
 			gameStats.previousGames = data
 
-			const highscore = data.reduce((acc, curr) => {
+			const highscore = data.reduce((acc: number, curr: { score: number }) => {
 				if (curr.score > acc) return curr.score
 				return acc
 			}, 0)

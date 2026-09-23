@@ -1,12 +1,11 @@
 import { redirect } from '@sveltejs/kit'
 
-export const load = async ({ locals: { supabase, getSession } }) => {
-	const session = await getSession()
+export const load = async ({ locals: { supabase, safeGetSession } }) => {
+	const { session } = await safeGetSession()
 	const userResponse = await supabase.auth.getUser()
 
 	if (!session || !session.user || userResponse.data.user === null) {
-		console.log(session)
-		throw redirect(303, '/')
+		redirect(303, '/')
 	}
 
 	const { data: profile } = await supabase
@@ -14,7 +13,7 @@ export const load = async ({ locals: { supabase, getSession } }) => {
 		.select(`id, username, avatar_url, following`)
 		.eq('id', session.user.id)
 		.single()
-	if (!profile) throw redirect(303, '/')
+	if (!profile) redirect(303, '/')
 
 	let { data: followers } = await supabase
 		.from('profiles')
@@ -32,18 +31,18 @@ export const load = async ({ locals: { supabase, getSession } }) => {
 }
 
 export const actions = {
-	signout: async ({ locals: { supabase, getSession } }) => {
-		const session = await getSession()
+	signout: async ({ locals: { supabase, safeGetSession } }) => {
+		const { session } = await safeGetSession()
 		if (session) {
 			await supabase.auth.signOut()
-			throw redirect(303, '/')
+			redirect(303, '/')
 		}
 	},
-	searchFriends: async ({ request, locals: { supabase, getSession } }) => {
+	searchFriends: async ({ request, locals: { supabase, safeGetSession } }) => {
 		const formData = await request.formData()
 		const search = (formData.get('search') as string).toLowerCase().trim()
 
-		const session = await getSession()
+		const { session } = await safeGetSession()
 		if (!session) return
 
 		let { data: profiles } = await supabase

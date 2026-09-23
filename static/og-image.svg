@@ -1,0 +1,36 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d0d1a"/>
+      <stop offset="100%" stop-color="#1e1e36"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Decorative glow circle -->
+  <circle cx="600" cy="315" r="280" fill="none" stroke="url(#glow)" stroke-width="1" opacity="0.2"/>
+  <circle cx="600" cy="315" r="200" fill="none" stroke="url(#glow)" stroke-width="1" opacity="0.15"/>
+
+  <!-- Pi symbol -->
+  <text x="580" y="220" font-family="serif" font-size="160" fill="url(#glow)" opacity="0.15" text-anchor="middle">À</text>
+
+  <!-- Badge -->
+  <rect x="450" y="200" width="300" height="36" rx="18" fill="#7c3aed" opacity="0.25"/>
+  <text x="600" y="223" font-family="sans-serif" font-size="14" fill="#a78bfa" text-anchor="middle" letter-spacing="3">>à KNOWLEDGE ARCADE</text>
+
+  <!-- Title -->
+  <text x="600" y="310" font-family="sans-serif" font-size="64" font-weight="800" fill="#f0eeff" text-anchor="middle">Learning The</text>
+  <text x="600" y="385" font-family="sans-serif" font-size="64" font-weight="800" fill="#a78bfa" text-anchor="middle">Useless</text>
+
+  <!-- Subtitle -->
+  <text x="600" y="450" font-family="sans-serif" font-size="24" fill="#9090b0" text-anchor="middle">Digits of Pi · World Flags · and more</text>
+
+  <!-- URL -->
+  <text x="600" y="570" font-family="sans-serif" font-size="18" fill="#6060a0" text-anchor="middle">learning-the-useless.vercel.app</text>
+</svg>

@@ -15,6 +15,7 @@
 
 <svelte:head>
 	<title>Sign in — Learning the Useless</title>
+	<meta name="description" content="Create an account to save your scores and challenge friends." />
 </svelte:head>
 
 <div class="auth-page">
@@ -22,7 +23,7 @@
 	<p class="sub">Save scores and see how you compare.</p>
 	<div class="auth-box">
 		<Auth
-			supabaseClient={data.supabase}
+			supabaseClient={data.supabase as any}
 			view="sign_up"
 			redirectTo={`${data.url}/auth/callback`}
 			showLinks={true}
@@ -42,9 +43,9 @@
 					}
 				}
 			}}
-		socialLayout="horizontal"
-		additionalData={{ provider: 'google' }}
-		providers={['google', 'discord']}
+			socialLayout="horizontal"
+			additionalData={{ provider: 'google' }}
+			providers={['google', 'discord']}
 		/>
 	</div>
 </div>
