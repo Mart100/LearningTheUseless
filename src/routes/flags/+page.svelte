@@ -19,6 +19,7 @@
 
 	let started = false
 	let ended = false
+	let isPreloading = false
 	let timeLeft = 5 * 60
 	let flagTimeLeft = 100
 	let score = 0
@@ -32,10 +33,30 @@
 
 	let interval: ReturnType<typeof setInterval>
 
+	// ── Flag preloading ───────────────────────────────────────────────────────
+
+	function preloadFlagImage(src: string): Promise<void> {
+		return new Promise((resolve) => {
+			const img = new Image()
+			img.onload = () => resolve()
+			img.onerror = () => resolve() // never block on a missing file
+			img.src = src
+		})
+	}
+
+	/** Fire-and-forget: cache `count` flags starting at `fromIdx`. */
+	function preloadAhead(fromIdx: number, count = 5): void {
+		for (let i = 0; i < count; i++) {
+			const c = countries[fromIdx + i]
+			if (c) preloadFlagImage(`/flags/${c.code.toLowerCase()}.svg`)
+		}
+	}
+
+	// ── Game logic ────────────────────────────────────────────────────────────
+
 	async function startGame() {
 		score = 0
 		countryIdx = 0
-		started = true
 		timeLeft = 5 * 60
 		flagTimeLeft = 100
 		mistakes = []
@@ -48,6 +69,17 @@
 				.sort(() => Math.random() - 0.5)
 				.sort((a, b) => b.popularity - a.popularity)
 		}
+
+		// Kick off background preload; await only the very first flag so the
+		// timer never ticks while the opening image is still in flight.
+		preloadAhead(0, 6)
+		if (countries[0]) {
+			isPreloading = true
+			await preloadFlagImage(`/flags/${countries[0].code.toLowerCase()}.svg`)
+			isPreloading = false
+		}
+
+		started = true
 
 		nextFlag()
 
@@ -175,6 +207,9 @@
 		countryIdx++
 		countryInputSuggestions = []
 		flagTimeLeft = 100
+
+		// Keep a warm lookahead buffer as the player advances
+		preloadAhead(countryIdx, 5)
 	}
 
 	onDestroy(() => {
@@ -226,7 +261,14 @@
 	{/if}
 
 	{#if !started && !ended}
-		<button on:click={startGame} id="startBtn" class="button primary">Start</button>
+		<button
+			on:click={startGame}
+			id="startBtn"
+			class="button primary"
+			disabled={isPreloading}
+		>
+			{#if isPreloading}Loading flags…{:else}Start{/if}
+		</button>
 	{:else}
 		<div id="topInfo">
 			<span>{formatTimeLeft(timeLeft)}</span>
