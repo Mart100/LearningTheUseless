@@ -16,12 +16,13 @@
 </script>
 
 <svelte:head>
-	<title>User Management</title>
+	<title>Sign Up — Learning The Useless</title>
+	<meta name="description" content="Create an account to save your scores and challenge friends." />
 </svelte:head>
 
 <div class="column">
 	<Auth
-		supabaseClient={data.supabase}
+		supabaseClient={data.supabase as any}
 		view="sign_up"
 		redirectTo={`${data.url}/auth/callback`}
 		showLinks={true}

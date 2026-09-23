@@ -1,5 +1,5 @@
 <script>
-	import Header from './Header.svelte'
+	import Nav from './Nav.svelte'
 	import './styles.scss'
 
 	import { invalidate } from '$app/navigation'
@@ -11,22 +11,28 @@
 	$: ({ supabase, session } = data)
 
 	onMount(() => {
-		const { data } = supabase.auth.onAuthStateChange((event, _session) => {
+		const {
+			data: { subscription }
+		} = supabase.auth.onAuthStateChange((event, _session) => {
 			if (_session?.expires_at !== session?.expires_at) {
 				invalidate('supabase:auth')
 			}
 		})
 
-		return () => data.subscription.unsubscribe()
+		return () => subscription.unsubscribe()
 	})
 </script>
 
 <div class="app">
-	<Header session={session !== null} />
+	<Nav session={session !== null} />
 
 	<main>
 		<slot />
 	</main>
+
+	<footer>
+		<p>Learning The Useless &mdash; because why not.</p>
+	</footer>
 </div>
 
 <style>
@@ -41,10 +47,22 @@
 		flex: 1;
 		display: flex;
 		flex-direction: column;
-		padding: 1rem;
+		padding: var(--space-6) var(--space-4);
 		width: 100%;
-		max-width: 64rem;
+		max-width: var(--max-width);
 		margin: 0 auto;
 		box-sizing: border-box;
+	}
+
+	footer {
+		border-top: 1px solid var(--color-border-subtle);
+		text-align: center;
+		padding: var(--space-4);
+
+		p {
+			font-size: var(--text-xs);
+			color: var(--color-text-faint);
+			margin: 0;
+		}
 	}
 </style>

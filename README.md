@@ -1,38 +1,92 @@
-# create-svelte
+# Learning The Useless — Knowledge Arcade
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+A collection of mini-games for facts nobody asked you to learn.
+Currently live at **[learning-the-useless.vercel.app](https://learning-the-useless.vercel.app/)**.
 
-## Creating a project
+> **Looking for the original v1 build?**
+> See [`docs/CLASSIC.md`](docs/CLASSIC.md) for how to deploy the frozen museum snapshot
+> (`archive/v1` / tag `v1-classic`) as its own Vercel project.
 
-If you're seeing this, you've probably already done this step. Congrats!
+---
+
+## Games
+
+| Game | Route | Supabase table |
+|---|---|---|
+| Digits of Pi | `/pi` | `game_pi` |
+| World Flags | `/flags` | `game_flags` |
+
+Adding a third game = one entry in `src/lib/games/registry.ts` + a new route.
+
+---
+
+## Stack (revival, Phase 1+)
+
+| Tool | Version |
+|---|---|
+| Svelte | 5 |
+| SvelteKit | 2 |
+| Vite | 5 |
+| `@supabase/ssr` | 0.5+ |
+| `@sveltejs/adapter-vercel` | 5 |
+
+Auth is handled server-side via `@supabase/ssr` (`createServerClient` in hooks,
+`createBrowserClient` / `createServerClient` in the layout load).
+
+---
+
+## Local development
+
+### Prerequisites
+
+- Node.js 20+
+- A Supabase project (reuse `qrciyzovgxpamjuacxnx` or create your own for local dev)
+
+### Setup
 
 ```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
+npm install
 ```
 
-## Developing
+Create `.env.local`:
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+```env
+PUBLIC_SUPABASE_URL=https://qrciyzovgxpamjuacxnx.supabase.co
+PUBLIC_SUPABASE_ANON_KEY=<your-anon-key>
+```
 
 ```bash
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
+### Type generation
 
-To create a production version of your app:
+```bash
+npm run updateSupabaseTypes
+```
+
+### Build
 
 ```bash
 npm run build
+npm run preview
 ```
 
-You can preview the production build with `npm run preview`.
+---
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+## Supabase schema (existing — no migrations needed for Phase 1)
+
+| Table | Purpose |
+|---|---|
+| `profiles` | User profiles: `id, username, avatar_url, following` |
+| `game_pi` | Pi game scores: `id, user_id, score, played_at` |
+| `game_flags` | Flags game scores: `id, user_id, score, played_at` |
+| `game_stats` | Aggregate stats per game: `game, data` |
+
+---
+
+## Deployment (Vercel)
+
+The app deploys automatically from `main` via the existing Vercel project.
+
+For the classic museum deployment, see [`docs/CLASSIC.md`](docs/CLASSIC.md).

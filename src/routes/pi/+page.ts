@@ -1,11 +1,14 @@
 import { fetchAllGameStats } from '$lib/fetchGameStats'
 
 export const load = async ({ parent }) => {
-	const streamed = parent().then(({ session, supabase }) => {
-		return fetchAllGameStats(supabase, session, 'pi')
-	})
-
+	const { session, supabase } = await parent()
+	const { gameStats, globalGameStats, friendsLeaderboard } = await fetchAllGameStats(
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		supabase as any,
+		session,
+		'pi'
+	)
 	return {
-		streamed
+		streamed: { gameStats, globalGameStats, friendsLeaderboard }
 	}
 }

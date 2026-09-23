@@ -1,7 +1,8 @@
 <script lang="ts">
 	import type { GameLeaderboardFriend, GameStatsData } from '../../app'
 
-	export let supabase: SupabaseClient
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	export let supabase: any
 	export let stats: GameStatsData
 	export let globalStats: Record<string, number>
 	export let friendsLeaderboard: GameLeaderboardFriend[]
@@ -29,7 +30,6 @@
 		Legend
 	} from 'chart.js'
 	import { downloadAvatar } from '$lib/utils'
-	import type { SupabaseClient } from '@supabase/supabase-js'
 	ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Legend)
 
 	let improvementGraphData: ChartData<'line', (number | Point)[], unknown>
