@@ -1,9 +1,12 @@
 <script lang="ts">
 	import { goto } from '$app/navigation'
+	import { page } from '$app/stores'
 	import { tick } from 'svelte'
 
 	import GameStats from '$lib/components/GameStats.svelte'
 	import ShareCard from '$lib/components/ShareCard.svelte'
+	import { updateStreakAfterDaily } from '$lib/fetchGameStats'
+	import { todayUTC } from '$lib/seededRandom'
 
 	import type { GameLeaderboardFriend, GameStatsData } from '../../app.js'
 
@@ -11,6 +14,9 @@
 
 	let { session, supabase } = data
 	$: ({ session, supabase } = data)
+
+	// Daily-challenge mode: activated via ?daily=1 query param
+	$: isDaily = $page.url.searchParams.get('daily') === '1'
 
 	let blinker: HTMLSpanElement | undefined
 	let piinput: HTMLInputElement
@@ -40,13 +46,20 @@
 		else {
 			scoreSavingStatus = 'saving'
 			let score = numbers.length
-			const { error, status, data } = await supabase.from('game_pi').insert({ score }).select()
+			const today = todayUTC()
+			const { error, status, data } = await supabase
+				.from('game_pi')
+				.insert({ score, is_daily: isDaily, daily_date: isDaily ? today : null })
+				.select()
 
 			if (data) {
 				scoreSavingStatus = 'saved'
 				if (gameStats && typeof gameStats === 'object') {
 					gameStats.previousGames = [data[0], ...gameStats.previousGames]
 					if (gameStats.highscore < score) gameStats.highscore = score
+				}
+				if (isDaily && session) {
+					await updateStreakAfterDaily(supabase, session.user.id)
 				}
 			}
 		}
@@ -128,7 +141,11 @@
 </svelte:head>
 
 <div class="page">
-	<h1>Digits of π</h1>
+	<h1>Digits of π{isDaily ? ' — Daily' : ''}</h1>
+
+	{#if isDaily}
+		<p class="daily-badge">Today's daily challenge · {todayUTC()}</p>
+	{/if}
 
 	{#if started === false}
 		<button id="startBtn" class="button primary" on:click={startGame}>Start</button>
@@ -199,7 +216,13 @@
 	}
 
 	h1 {
-		margin-bottom: 1.5rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.daily-badge {
+		font-size: 0.8rem;
+		color: var(--fg-muted);
+		margin-bottom: 1.25rem;
 	}
 
 	#startBtn {

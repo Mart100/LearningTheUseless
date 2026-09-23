@@ -21,6 +21,9 @@
 		month: 'long'
 	})
 
+	let streakCurrent: number = profile.streak_current ?? 0
+	let streakBest: number = profile.streak_best ?? 0
+
 	let signOutLoading = false
 	const handleSignOut = () => {
 		signOutLoading = true
@@ -49,6 +52,14 @@
 		{/if}
 	</div>
 
+	{#if streakCurrent > 0 || streakBest > 0}
+		<div class="streak-row">
+			<span class="streak-item">🔥 {streakCurrent}-day streak</span>
+			<span class="streak-sep">·</span>
+			<span class="streak-item muted">Best: {streakBest}</span>
+		</div>
+	{/if}
+
 	<div class="actions">
 		<a class="button" href="account/edit">Edit profile</a>
 		<form method="post" action="?/signout" use:enhance={handleSignOut}>
@@ -61,6 +72,27 @@
 </div>
 
 <style lang="scss">
+	.streak-row {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.875rem;
+		margin-bottom: 1.25rem;
+		padding: 0.55rem 0.85rem;
+		background: var(--bg-inset, #f4f3f0);
+		border: 1px solid var(--border);
+		border-radius: 6px;
+		width: fit-content;
+
+		.streak-sep {
+			color: var(--fg-subtle, #aaa);
+		}
+
+		.muted {
+			color: var(--fg-muted);
+		}
+	}
+
 	.account {
 		max-width: 560px;
 

@@ -9,24 +9,98 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      game_flags: {
+      game_capitals: {
         Row: {
           id: number
           played_at: string
           score: number
           user_id: string
+          is_daily: boolean
+          daily_date: string | null
         }
         Insert: {
           id?: number
           played_at?: string
           score?: number
           user_id?: string
+          is_daily?: boolean
+          daily_date?: string | null
         }
         Update: {
           id?: number
           played_at?: string
           score?: number
           user_id?: string
+          is_daily?: boolean
+          daily_date?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "game_capitals_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      game_elements: {
+        Row: {
+          id: number
+          played_at: string
+          score: number
+          user_id: string
+          is_daily: boolean
+          daily_date: string | null
+        }
+        Insert: {
+          id?: number
+          played_at?: string
+          score?: number
+          user_id?: string
+          is_daily?: boolean
+          daily_date?: string | null
+        }
+        Update: {
+          id?: number
+          played_at?: string
+          score?: number
+          user_id?: string
+          is_daily?: boolean
+          daily_date?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "game_elements_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      game_flags: {
+        Row: {
+          id: number
+          played_at: string
+          score: number
+          user_id: string
+          is_daily: boolean
+          daily_date: string | null
+        }
+        Insert: {
+          id?: number
+          played_at?: string
+          score?: number
+          user_id?: string
+          is_daily?: boolean
+          daily_date?: string | null
+        }
+        Update: {
+          id?: number
+          played_at?: string
+          score?: number
+          user_id?: string
+          is_daily?: boolean
+          daily_date?: string | null
         }
         Relationships: [
           {
@@ -43,18 +117,24 @@ export type Database = {
           played_at: string
           score: number
           user_id: string
+          is_daily: boolean
+          daily_date: string | null
         }
         Insert: {
           id?: number
           played_at?: string
           score?: number
           user_id?: string
+          is_daily?: boolean
+          daily_date?: string | null
         }
         Update: {
           id?: number
           played_at?: string
           score?: number
           user_id?: string
+          is_daily?: boolean
+          daily_date?: string | null
         }
         Relationships: [
           {
@@ -87,6 +167,9 @@ export type Database = {
           id: string
           updated_at: string | null
           username: string
+          streak_current: number
+          streak_best: number
+          streak_last_date: string | null
         }
         Insert: {
           avatar_url?: string
@@ -94,6 +177,9 @@ export type Database = {
           id: string
           updated_at?: string | null
           username?: string
+          streak_current?: number
+          streak_best?: number
+          streak_last_date?: string | null
         }
         Update: {
           avatar_url?: string
@@ -101,6 +187,9 @@ export type Database = {
           id?: string
           updated_at?: string | null
           username?: string
+          streak_current?: number
+          streak_best?: number
+          streak_last_date?: string | null
         }
         Relationships: [
           {
