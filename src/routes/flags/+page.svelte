@@ -3,9 +3,10 @@
 	import countryCodes from '$lib/countries.json'
 	import { onDestroy, tick } from 'svelte'
 	import type { GameLeaderboardFriend, GameStatsData } from '../../app.js'
-	let countries = Object.values(countryCodes)
-
 	import GameStats from '$lib/components/GameStats.svelte'
+	import ShareCard from '$lib/components/ShareCard.svelte'
+
+	let countries = Object.values(countryCodes)
 
 	export let data
 	let { session, supabase } = data
@@ -197,7 +198,7 @@
 		content="Name every country flag before the timer runs out. Train your vexillology — flags quiz with leaderboards."
 	/>
 	<meta property="og:type" content="website" />
-	<meta property="og:image" content="/og-image.svg" />
+	<meta property="og:image" content="/og-image.png" />
 	<meta name="twitter:card" content="summary_large_image" />
 </svelte:head>
 
@@ -228,6 +229,10 @@
 						{scoreSavingStatus !== 'saving' ? 'Save score' : 'Saving…'}
 					</button>
 				{/if}
+				<ShareCard
+					headline="{score} flags"
+					detail="in {formatTimeLeft(5 * 60 - timeLeft)} · Country Flags"
+				/>
 			</div>
 		{:else if started}
 			<div id="flag">
