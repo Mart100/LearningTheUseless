@@ -79,17 +79,16 @@
 
 		.nav {
 			display: flex;
-			justify-content: space-between;
+			gap: 1.5rem;
 			margin-bottom: 1rem;
-			font-size: 1.1rem;
-			font-weight: 900;
-			text-transform: uppercase;
+			font-size: 0.875rem;
+			font-weight: 500;
 
 			div {
 				cursor: pointer;
 
 				&.selected {
-					border-bottom: 5px solid var(--color-1);
+					border-bottom: 2px solid var(--fg);
 				}
 			}
 		}

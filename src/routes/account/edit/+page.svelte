@@ -111,7 +111,7 @@
 		label {
 			display: block;
 			margin: 5px 0;
-			color: var(--custom-color-secondary);
+			color: var(--fg-muted);
 			font-size: 0.8rem;
 			text-transform: uppercase;
 		}
@@ -121,7 +121,7 @@
 			display: block;
 
 			&[disabled] {
-				color: var(--custom-color-secondary);
+				color: var(--fg-muted);
 			}
 		}
 

@@ -1,5 +1,5 @@
 <script>
-	import Nav from './Nav.svelte'
+	import Header from './Header.svelte'
 	import './styles.scss'
 
 	import { invalidate } from '$app/navigation'
@@ -24,15 +24,11 @@
 </script>
 
 <div class="app">
-	<Nav session={session !== null} />
+	<Header session={session !== null} />
 
 	<main>
 		<slot />
 	</main>
-
-	<footer>
-		<p>Learning The Useless &mdash; because why not.</p>
-	</footer>
 </div>
 
 <style>
@@ -40,29 +36,22 @@
 		display: flex;
 		flex-direction: column;
 		min-height: 100vh;
-		width: 100%;
 	}
 
 	main {
 		flex: 1;
 		display: flex;
 		flex-direction: column;
-		padding: var(--space-6) var(--space-4);
+		padding: 2.5rem 1.5rem;
 		width: 100%;
 		max-width: var(--max-width);
 		margin: 0 auto;
 		box-sizing: border-box;
 	}
 
-	footer {
-		border-top: 1px solid var(--color-border-subtle);
-		text-align: center;
-		padding: var(--space-4);
-
-		p {
-			font-size: var(--text-xs);
-			color: var(--color-text-faint);
-			margin: 0;
+	@media (max-width: 480px) {
+		main {
+			padding: 1.5rem 1rem;
 		}
 	}
 </style>

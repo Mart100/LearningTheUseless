@@ -115,10 +115,7 @@
 
 <svelte:head>
 	<title>Digits of Pi — Learning The Useless</title>
-	<meta
-		name="description"
-		content="Test how many digits of Pi (π) you can remember. Type them in order and beat your highscore!"
-	/>
+	<meta name="description" content="How many digits of π can you type from memory?" />
 	<meta property="og:title" content="Digits of Pi — Learning The Useless" />
 	<meta
 		property="og:description"
@@ -129,10 +126,11 @@
 	<meta name="twitter:card" content="summary_large_image" />
 </svelte:head>
 
-<div class="column">
-	<h1>PI game</h1>
+<div class="page">
+	<h1>Digits of π</h1>
+
 	{#if started === false}
-		<button id="startBtn" class="button primary" on:click={startGame}>Play</button>
+		<button id="startBtn" class="button primary" on:click={startGame}>Start</button>
 	{:else}
 		<div id="game">
 			<input
@@ -155,30 +153,32 @@
 			</div>
 		</div>
 	{/if}
+
 	{#if wrongNumber !== false}
-		<div>Score: {numbers.length} digits</div>
-		<div id="bottomButtonRow">
-			<button id="restart" class="button" on:click={restartGame} bind:this={restartBtn}
-				>Try again</button
-			>
+		<p class="score-line">{numbers.length} digits</p>
+		<div class="button-row">
+			<button id="restart" class="button" on:click={restartGame} bind:this={restartBtn}>
+				Try again
+			</button>
 			{#if scoreSavingStatus !== 'saved'}
 				<button
 					id="saveScore"
 					on:click={saveScore}
 					class="button primary"
 					disabled={scoreSavingStatus === 'saving'}
-					>{scoreSavingStatus !== 'saving' ? 'Save Score' : 'Saving...'}</button
 				>
+					{scoreSavingStatus !== 'saving' ? 'Save score' : 'Saving…'}
+				</button>
 			{/if}
 		</div>
 	{/if}
 
 	{#if gameStatsStatus === 'guest'}
-		<div id="stats"><h2>Sign in to view/save and compare your scores!</h2></div>
+		<p class="stats-nudge"><a href="/signup">Sign in</a> to save and compare scores.</p>
 	{:else if gameStatsStatus === 'loading'}
-		<div id="stats"><h2>Loading stats...</h2></div>
+		<p class="stats-nudge">Loading stats…</p>
 	{:else if gameStatsStatus === 'error'}
-		<div id="stats"><h2>Error loading stats</h2></div>
+		<p class="stats-nudge">Couldn't load stats.</p>
 	{:else if gameStats && globalGameStats && friendsLeaderboardStats}
 		<GameStats
 			stats={gameStats}
@@ -189,60 +189,68 @@
 	{/if}
 </div>
 
-<style lang="scss">
-	.column {
+<style>
+	.page {
 		display: flex;
 		flex-direction: column;
-		align-items: center;
-		height: 100vh;
-		margin-top: 10vh;
+		align-items: flex-start;
 	}
+
+	h1 {
+		margin-bottom: 1.5rem;
+	}
+
 	#startBtn {
-		text-align: center;
-		display: inline-block;
-		font-size: 20px;
-		font-weight: 500;
-		padding: 15px 32px;
+		font-size: 1rem;
+		padding: 0.6rem 1.75rem;
 	}
 
 	#game {
-		margin: 2vh 0;
-
-		#piinput {
-			width: 0px;
-			padding: 0px;
-			border: 0px;
-			opacity: 0;
-		}
-
-		#numbers {
-			font-size: 0;
-
-			span {
-				margin: 0;
-				font-size: 2rem;
-			}
-
-			#wrongNumber {
-				color: red;
-			}
-
-			#nextNumbers {
-				color: lightgreen;
-			}
-		}
+		margin: 1rem 0 1.5rem;
 	}
 
-	#bottomButtonRow {
-		display: inline-block;
-		margin: 2vh auto;
-		padding: 15px 10px;
+	#piinput {
+		width: 0;
+		padding: 0;
+		border: 0;
+		opacity: 0;
+		position: absolute;
+	}
 
-		#saveScore {
-			&:disabled {
-				background-color: rgb(50, 50, 50);
-				cursor: not-allowed;
-			}
-		}
+	#numbers {
+		font-size: 1.75rem;
+		font-family: var(--font-mono);
+		letter-spacing: -0.01em;
+	}
+
+	#numbers span {
+		margin: 0;
+	}
+
+	#wrongNumber {
+		color: #c0392b;
+	}
+
+	#nextNumbers {
+		color: var(--fg-muted);
+	}
+
+	.score-line {
+		font-size: 1rem;
+		color: var(--fg-muted);
+		margin: 0 0 1rem;
+	}
+
+	.button-row {
+		display: flex;
+		gap: 0.75rem;
+		flex-wrap: wrap;
+		margin-bottom: 2rem;
+	}
+
+	.stats-nudge {
+		margin-top: 2rem;
+		font-size: 0.875rem;
+		color: var(--fg-muted);
 	}
 </style>
