@@ -4,6 +4,15 @@
 		name="description"
 		content="Memorize digits of π and country flags. No practical use whatsoever."
 	/>
+	<meta property="og:title" content="Learning the Useless" />
+	<meta
+		property="og:description"
+		content="Memorize digits of π and country flags. No practical use whatsoever."
+	/>
+	<meta property="og:type" content="website" />
+	<meta property="og:image" content="/og-image.png" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:image" content="/og-image.png" />
 </svelte:head>
 
 <div class="home">

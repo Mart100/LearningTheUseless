@@ -3,6 +3,7 @@
 	import { tick } from 'svelte'
 
 	import GameStats from '$lib/components/GameStats.svelte'
+	import ShareCard from '$lib/components/ShareCard.svelte'
 
 	import type { GameLeaderboardFriend, GameStatsData } from '../../app.js'
 
@@ -122,7 +123,7 @@
 		content="How far into π can you go from memory? Type the digits in order and save your highscore."
 	/>
 	<meta property="og:type" content="website" />
-	<meta property="og:image" content="/og-image.svg" />
+	<meta property="og:image" content="/og-image.png" />
 	<meta name="twitter:card" content="summary_large_image" />
 </svelte:head>
 
@@ -170,6 +171,7 @@
 					{scoreSavingStatus !== 'saving' ? 'Save score' : 'Saving…'}
 				</button>
 			{/if}
+			<ShareCard headline="{numbers.length} digits of π" detail="Digits of Pi" />
 		</div>
 	{/if}
 
