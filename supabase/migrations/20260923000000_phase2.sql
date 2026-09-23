@@ -42,9 +42,11 @@ CREATE POLICY "capitals: users insert own rows"
   ON game_capitals FOR INSERT TO authenticated
   WITH CHECK (auth.uid() = user_id);
 
-CREATE POLICY "capitals: users read own rows"
+-- USING (true) mirrors game_pi / game_flags so the friends leaderboard query
+-- (which reads followed users' scores) can see rows it doesn't own.
+CREATE POLICY "capitals: authenticated users read all rows"
   ON game_capitals FOR SELECT TO authenticated
-  USING (auth.uid() = user_id);
+  USING (true);
 
 CREATE UNIQUE INDEX IF NOT EXISTS game_capitals_daily_user_date
   ON game_capitals (user_id, daily_date)
@@ -66,9 +68,11 @@ CREATE POLICY "elements: users insert own rows"
   ON game_elements FOR INSERT TO authenticated
   WITH CHECK (auth.uid() = user_id);
 
-CREATE POLICY "elements: users read own rows"
+-- USING (true) mirrors game_pi / game_flags so the friends leaderboard query
+-- (which reads followed users' scores) can see rows it doesn't own.
+CREATE POLICY "elements: authenticated users read all rows"
   ON game_elements FOR SELECT TO authenticated
-  USING (auth.uid() = user_id);
+  USING (true);
 
 CREATE UNIQUE INDEX IF NOT EXISTS game_elements_daily_user_date
   ON game_elements (user_id, daily_date)
