@@ -10,7 +10,7 @@ export const load = async ({ locals: { supabase, safeGetSession } }) => {
 
 	const { data: profile } = await supabase
 		.from('profiles')
-		.select(`id, username, avatar_url, following`)
+		.select(`id, username, avatar_url, following, streak_current, streak_best, streak_last_date`)
 		.eq('id', session.user.id)
 		.single()
 	if (!profile) redirect(303, '/')

@@ -1,208 +1,1032 @@
 {
-	"AD": { "name": "Andorra", "popularity": 2 },
-	"AE": { "name": "United Arab Emirates", "popularity": 7 },
-	"AF": { "name": "Afghanistan", "popularity": 4 },
-	"AG": { "name": "Antigua and Barbuda", "popularity": 2 },
-	"AL": { "name": "Albania", "popularity": 3 },
-	"AM": { "name": "Armenia", "popularity": 3 },
-	"AO": { "name": "Angola", "popularity": 3 },
-	"AQ": { "name": "Antarctica", "popularity": 7 },
-	"AR": { "name": "Argentina", "popularity": 7 },
-	"AT": { "name": "Austria", "popularity": 6 },
-	"AU": { "name": "Australia", "popularity": 8 },
-	"AZ": { "name": "Azerbaijan", "popularity": 3 },
-	"BA": { "name": "Bosnia and Herzegovina", "popularity": 3 },
-	"BB": { "name": "Barbados", "popularity": 1 },
-	"BD": { "name": "Bangladesh", "popularity": 5 },
-	"BE": { "name": "Belgium", "popularity": 6 },
-	"BF": { "name": "Burkina Faso", "popularity": 3 },
-	"BG": { "name": "Bulgaria", "popularity": 5 },
-	"BH": { "name": "Bahrain", "popularity": 3 },
-	"BI": { "name": "Burundi", "popularity": 2 },
-	"BJ": { "name": "Benin", "popularity": 2 },
-	"BN": { "name": "Brunei", "popularity": 3 },
-	"BO": { "name": "Bolivia", "popularity": 3 },
-	"BR": { "name": "Brazil", "popularity": 9 },
-	"BS": { "name": "Bahamas", "popularity": 4 },
-	"BT": { "name": "Bhutan", "popularity": 2 },
-	"BW": { "name": "Botswana", "popularity": 3 },
-	"BY": { "name": "Belarus", "popularity": 4 },
-	"BZ": { "name": "Belize", "popularity": 2 },
-	"CA": { "name": "Canada", "popularity": 8 },
-	"CD": { "name": "the Democratic Republic of the Congo", "popularity": 3 },
-	"CF": { "name": "Central African Republic", "popularity": 3 },
-	"CG": { "name": "Republic of the Congo", "popularity": 3 },
-	"CH": { "name": "Switzerland", "popularity": 7 },
-	"CI": { "name": "Côte d'Ivoire", "popularity": 2 },
-	"CL": { "name": "Chile", "popularity": 5 },
-	"CM": { "name": "Cameroon", "popularity": 3 },
-	"CN": { "name": "China", "popularity": 9 },
-	"CO": { "name": "Colombia", "popularity": 6 },
-	"CR": { "name": "Costa Rica", "popularity": 4 },
-	"CU": { "name": "Cuba", "popularity": 4 },
-	"CV": { "name": "Cape Verde", "popularity": 1 },
-	"CY": { "name": "Cyprus", "popularity": 4 },
-	"CZ": { "name": "Czechia", "popularity": 5 },
-	"DE": { "name": "Germany", "popularity": 8 },
-	"DJ": { "name": "Djibouti", "popularity": 2 },
-	"DK": { "name": "Denmark", "popularity": 5 },
-	"DM": { "name": "Dominica", "popularity": 2 },
-	"DO": { "name": "Dominican Republic", "popularity": 2 },
-	"DZ": { "name": "Algeria", "popularity": 4 },
-	"EC": { "name": "Ecuador", "popularity": 4 },
-	"EE": { "name": "Estonia", "popularity": 3 },
-	"EG": { "name": "Egypt", "popularity": 7 },
-	"EH": { "name": "Western Sahara", "popularity": 2 },
-	"ER": { "name": "Eritrea", "popularity": 2 },
-	"ES": { "name": "Spain", "popularity": 7 },
-	"ET": { "name": "Ethiopia", "popularity": 4 },
-	"EU": { "name": "Europe", "popularity": 8 },
-	"FI": { "name": "Finland", "popularity": 5 },
-	"FJ": { "name": "Fiji", "popularity": 1 },
-	"FM": { "name": "Micronesia", "popularity": 2 },
-	"FR": { "name": "France", "popularity": 8 },
-	"GA": { "name": "Gabon", "popularity": 2 },
-	"GB-ENG": { "name": "England", "popularity": 6 },
-	"GB-SCT": { "name": "Scotland", "popularity": 5 },
-	"GB-WLS": { "name": "Wales", "popularity": 4 },
-	"GB": { "name": "United Kingdom", "popularity": 8 },
-	"GD": { "name": "Grenada", "popularity": 3 },
-	"GE": { "name": "Georgia", "popularity": 4 },
-	"GH": { "name": "Ghana", "popularity": 4 },
-	"GI": { "name": "Gibraltar", "popularity": 2 },
-	"GL": { "name": "Greenland", "popularity": 3 },
-	"GM": { "name": "Gambia", "popularity": 2 },
-	"GN": { "name": "Guinea", "popularity": 2 },
-	"GQ": { "name": "Equatorial Guinea", "popularity": 2 },
-	"GR": { "name": "Greece", "popularity": 6 },
-	"GW": { "name": "Guinea-Bissau", "popularity": 2 },
-	"GY": { "name": "Guyana", "popularity": 2 },
-	"HK": { "name": "Hong Kong", "popularity": 5 },
-	"HN": { "name": "Honduras", "popularity": 3 },
-	"HR": { "name": "Croatia", "popularity": 4 },
-	"HT": { "name": "Haiti", "popularity": 3 },
-	"HU": { "name": "Hungary", "popularity": 4 },
-	"ID": { "name": "Indonesia", "popularity": 7 },
-	"IE": { "name": "Ireland", "popularity": 5 },
-	"IL": { "name": "Israel", "popularity": 6 },
-	"IN": { "name": "India", "popularity": 9 },
-	"IQ": { "name": "Iraq", "popularity": 4 },
-	"IR": { "name": "Iran", "popularity": 4 },
-	"IS": { "name": "Iceland", "popularity": 4 },
-	"IT": { "name": "Italy", "popularity": 7 },
-	"JM": { "name": "Jamaica", "popularity": 3 },
-	"JO": { "name": "Jordan", "popularity": 3 },
-	"JP": { "name": "Japan", "popularity": 9 },
-	"KE": { "name": "Kenya", "popularity": 4 },
-	"KG": { "name": "Kyrgyzstan", "popularity": 3 },
-	"KH": { "name": "Cambodia", "popularity": 3 },
-	"KI": { "name": "Kiribati", "popularity": 1 },
-	"KM": { "name": "Comoros", "popularity": 1 },
-	"KN": { "name": "Saint Kitts and Nevis", "popularity": 1 },
-	"KP": { "name": "North Korea", "popularity": 7 },
-	"KR": { "name": "South Korea", "popularity": 8 },
-	"KW": { "name": "Kuwait", "popularity": 4 },
-	"KZ": { "name": "Kazakhstan", "popularity": 4 },
-	"LA": { "name": "Laos", "popularity": 3 },
-	"LB": { "name": "Lebanon", "popularity": 4 },
-	"LC": { "name": "Saint Lucia", "popularity": 1 },
-	"LI": { "name": "Liechtenstein", "popularity": 2 },
-	"LK": { "name": "Sri Lanka", "popularity": 4 },
-	"LR": { "name": "Liberia", "popularity": 2 },
-	"LS": { "name": "Lesotho", "popularity": 2 },
-	"LT": { "name": "Lithuania", "popularity": 3 },
-	"LU": { "name": "Luxembourg", "popularity": 4 },
-	"LV": { "name": "Latvia", "popularity": 3 },
-	"LY": { "name": "Libya", "popularity": 3 },
-	"MA": { "name": "Morocco", "popularity": 6 },
-	"MC": { "name": "Monaco", "popularity": 3 },
-	"MD": { "name": "Moldova", "popularity": 2 },
-	"ME": { "name": "Montenegro", "popularity": 3 },
-	"MG": { "name": "Madagascar", "popularity": 2 },
-	"MH": { "name": "Marshall Islands", "popularity": 2 },
-	"MK": { "name": "North Macedonia", "popularity": 3 },
-	"ML": { "name": "Mali", "popularity": 2 },
-	"MM": { "name": "Myanmar", "popularity": 3 },
-	"MN": { "name": "Mongolia", "popularity": 3 },
-	"MO": { "name": "Macao", "popularity": 3 },
-	"MR": { "name": "Mauritania", "popularity": 2 },
-	"MT": { "name": "Malta", "popularity": 3 },
-	"MU": { "name": "Mauritius", "popularity": 2 },
-	"MV": { "name": "Maldives", "popularity": 2 },
-	"MW": { "name": "Malawi", "popularity": 2 },
-	"MX": { "name": "Mexico", "popularity": 8 },
-	"MY": { "name": "Malaysia", "popularity": 5 },
-	"MZ": { "name": "Mozambique", "popularity": 2 },
-	"NA": { "name": "Namibia", "popularity": 3 },
-	"NE": { "name": "Niger", "popularity": 3 },
-	"NG": { "name": "Nigeria", "popularity": 6 },
-	"NI": { "name": "Nicaragua", "popularity": 3 },
-	"NL": { "name": "Netherlands", "popularity": 7 },
-	"NO": { "name": "Norway", "popularity": 6 },
-	"NP": { "name": "Nepal", "popularity": 5 },
-	"NR": { "name": "Nauru", "popularity": 1 },
-	"NZ": { "name": "New Zealand", "popularity": 7 },
-	"OM": { "name": "Oman", "popularity": 4 },
-	"PA": { "name": "Panama", "popularity": 3 },
-	"PE": { "name": "Peru", "popularity": 5 },
-	"PG": { "name": "Papua New Guinea", "popularity": 3 },
-	"PH": { "name": "Philippines", "popularity": 6 },
-	"PK": { "name": "Pakistan", "popularity": 6 },
-	"PL": { "name": "Poland", "popularity": 5 },
-	"PS": { "name": "Palestine", "popularity": 3 },
-	"PT": { "name": "Portugal", "popularity": 6 },
-	"PW": { "name": "Palau", "popularity": 1 },
-	"PY": { "name": "Paraguay", "popularity": 3 },
-	"QA": { "name": "Qatar", "popularity": 5 },
-	"RO": { "name": "Romania", "popularity": 5 },
-	"RS": { "name": "Serbia", "popularity": 4 },
-	"RU": { "name": "Russia", "popularity": 9 },
-	"RW": { "name": "Rwanda", "popularity": 2 },
-	"SA": { "name": "Saudi Arabia", "popularity": 6 },
-	"SB": { "name": "Solomon Islands", "popularity": 1 },
-	"SC": { "name": "Seychelles", "popularity": 1 },
-	"SD": { "name": "Sudan", "popularity": 3 },
-	"SE": { "name": "Sweden", "popularity": 6 },
-	"SG": { "name": "Singapore", "popularity": 7 },
-	"SI": { "name": "Slovenia", "popularity": 4 },
-	"SK": { "name": "Slovakia", "popularity": 4 },
-	"SL": { "name": "Sierra Leone", "popularity": 2 },
-	"SM": { "name": "San Marino", "popularity": 3 },
-	"SN": { "name": "Senegal", "popularity": 3 },
-	"SO": { "name": "Somalia", "popularity": 2 },
-	"SR": { "name": "Suriname", "popularity": 2 },
-	"SS": { "name": "South Sudan", "popularity": 2 },
-	"ST": { "name": "Sao Tome and Principe", "popularity": 1 },
-	"SV": { "name": "El Salvador", "popularity": 3 },
-	"SY": { "name": "Syria", "popularity": 5 },
-	"SZ": { "name": "Eswatini", "popularity": 2 },
-	"TD": { "name": "Chad", "popularity": 2 },
-	"TG": { "name": "Togo", "popularity": 2 },
-	"TH": { "name": "Thailand", "popularity": 5 },
-	"TJ": { "name": "Tajikistan", "popularity": 3 },
-	"TL": { "name": "Timor-Leste", "popularity": 2 },
-	"TM": { "name": "Turkmenistan", "popularity": 3 },
-	"TN": { "name": "Tunisia", "popularity": 3 },
-	"TO": { "name": "Tonga", "popularity": 1 },
-	"TR": { "name": "Turkey", "popularity": 7 },
-	"TT": { "name": "Trinidad and Tobago", "popularity": 1 },
-	"TV": { "name": "Tuvalu", "popularity": 1 },
-	"TW": { "name": "Taiwan", "popularity": 6 },
-	"TZ": { "name": "Tanzania", "popularity": 4 },
-	"UA": { "name": "Ukraine", "popularity": 6 },
-	"UG": { "name": "Uganda", "popularity": 3 },
-	"US": { "name": "United States", "popularity": 9 },
-	"UY": { "name": "Uruguay", "popularity": 3 },
-	"UZ": { "name": "Uzbekistan", "popularity": 3 },
-	"VA": { "name": "Vatican City", "popularity": 5 },
-	"VC": { "name": "Saint Vincent and the Grenadines", "popularity": 1 },
-	"VE": { "name": "Venezuela", "popularity": 4 },
-	"VN": { "name": "Vietnam", "popularity": 6 },
-	"VU": { "name": "Vanuatu", "popularity": 1 },
-	"WS": { "name": "Samoa", "popularity": 1 },
-	"XK": { "name": "Kosovo", "popularity": 2 },
-	"YE": { "name": "Yemen", "popularity": 3 },
-	"ZA": { "name": "South Africa", "popularity": 7 },
-	"ZM": { "name": "Zambia", "popularity": 3 },
-	"ZW": { "name": "Zimbabwe", "popularity": 3 }
+	"AD": {
+		"name": "Andorra",
+		"popularity": 2,
+		"capital": "Andorra la Vella"
+	},
+	"AE": {
+		"name": "United Arab Emirates",
+		"popularity": 7,
+		"capital": "Abu Dhabi"
+	},
+	"AF": {
+		"name": "Afghanistan",
+		"popularity": 4,
+		"capital": "Kabul"
+	},
+	"AG": {
+		"name": "Antigua and Barbuda",
+		"popularity": 2,
+		"capital": "St. John's"
+	},
+	"AL": {
+		"name": "Albania",
+		"popularity": 3,
+		"capital": "Tirana"
+	},
+	"AM": {
+		"name": "Armenia",
+		"popularity": 3,
+		"capital": "Yerevan"
+	},
+	"AO": {
+		"name": "Angola",
+		"popularity": 3,
+		"capital": "Luanda"
+	},
+	"AQ": {
+		"name": "Antarctica",
+		"popularity": 7,
+		"capital": "N/A"
+	},
+	"AR": {
+		"name": "Argentina",
+		"popularity": 7,
+		"capital": "Buenos Aires"
+	},
+	"AT": {
+		"name": "Austria",
+		"popularity": 6,
+		"capital": "Vienna"
+	},
+	"AU": {
+		"name": "Australia",
+		"popularity": 8,
+		"capital": "Canberra"
+	},
+	"AZ": {
+		"name": "Azerbaijan",
+		"popularity": 3,
+		"capital": "Baku"
+	},
+	"BA": {
+		"name": "Bosnia and Herzegovina",
+		"popularity": 3,
+		"capital": "Sarajevo"
+	},
+	"BB": {
+		"name": "Barbados",
+		"popularity": 1,
+		"capital": "Bridgetown"
+	},
+	"BD": {
+		"name": "Bangladesh",
+		"popularity": 5,
+		"capital": "Dhaka"
+	},
+	"BE": {
+		"name": "Belgium",
+		"popularity": 6,
+		"capital": "Brussels"
+	},
+	"BF": {
+		"name": "Burkina Faso",
+		"popularity": 3,
+		"capital": "Ouagadougou"
+	},
+	"BG": {
+		"name": "Bulgaria",
+		"popularity": 5,
+		"capital": "Sofia"
+	},
+	"BH": {
+		"name": "Bahrain",
+		"popularity": 3,
+		"capital": "Manama"
+	},
+	"BI": {
+		"name": "Burundi",
+		"popularity": 2,
+		"capital": "Gitega"
+	},
+	"BJ": {
+		"name": "Benin",
+		"popularity": 2,
+		"capital": "Porto-Novo"
+	},
+	"BN": {
+		"name": "Brunei",
+		"popularity": 3,
+		"capital": "Bandar Seri Begawan"
+	},
+	"BO": {
+		"name": "Bolivia",
+		"popularity": 3,
+		"capital": "Sucre"
+	},
+	"BR": {
+		"name": "Brazil",
+		"popularity": 9,
+		"capital": "Brasília"
+	},
+	"BS": {
+		"name": "Bahamas",
+		"popularity": 4,
+		"capital": "Nassau"
+	},
+	"BT": {
+		"name": "Bhutan",
+		"popularity": 2,
+		"capital": "Thimphu"
+	},
+	"BW": {
+		"name": "Botswana",
+		"popularity": 3,
+		"capital": "Gaborone"
+	},
+	"BY": {
+		"name": "Belarus",
+		"popularity": 4,
+		"capital": "Minsk"
+	},
+	"BZ": {
+		"name": "Belize",
+		"popularity": 2,
+		"capital": "Belmopan"
+	},
+	"CA": {
+		"name": "Canada",
+		"popularity": 8,
+		"capital": "Ottawa"
+	},
+	"CD": {
+		"name": "the Democratic Republic of the Congo",
+		"popularity": 3,
+		"capital": "Kinshasa"
+	},
+	"CF": {
+		"name": "Central African Republic",
+		"popularity": 3,
+		"capital": "Bangui"
+	},
+	"CG": {
+		"name": "Republic of the Congo",
+		"popularity": 3,
+		"capital": "Brazzaville"
+	},
+	"CH": {
+		"name": "Switzerland",
+		"popularity": 7,
+		"capital": "Bern"
+	},
+	"CI": {
+		"name": "Côte d'Ivoire",
+		"popularity": 2,
+		"capital": "Yamoussoukro"
+	},
+	"CL": {
+		"name": "Chile",
+		"popularity": 5,
+		"capital": "Santiago"
+	},
+	"CM": {
+		"name": "Cameroon",
+		"popularity": 3,
+		"capital": "Yaoundé"
+	},
+	"CN": {
+		"name": "China",
+		"popularity": 9,
+		"capital": "Beijing"
+	},
+	"CO": {
+		"name": "Colombia",
+		"popularity": 6,
+		"capital": "Bogotá"
+	},
+	"CR": {
+		"name": "Costa Rica",
+		"popularity": 4,
+		"capital": "San José"
+	},
+	"CU": {
+		"name": "Cuba",
+		"popularity": 4,
+		"capital": "Havana"
+	},
+	"CV": {
+		"name": "Cape Verde",
+		"popularity": 1,
+		"capital": "Praia"
+	},
+	"CY": {
+		"name": "Cyprus",
+		"popularity": 4,
+		"capital": "Nicosia"
+	},
+	"CZ": {
+		"name": "Czechia",
+		"popularity": 5,
+		"capital": "Prague"
+	},
+	"DE": {
+		"name": "Germany",
+		"popularity": 8,
+		"capital": "Berlin"
+	},
+	"DJ": {
+		"name": "Djibouti",
+		"popularity": 2,
+		"capital": "Djibouti"
+	},
+	"DK": {
+		"name": "Denmark",
+		"popularity": 5,
+		"capital": "Copenhagen"
+	},
+	"DM": {
+		"name": "Dominica",
+		"popularity": 2,
+		"capital": "Roseau"
+	},
+	"DO": {
+		"name": "Dominican Republic",
+		"popularity": 2,
+		"capital": "Santo Domingo"
+	},
+	"DZ": {
+		"name": "Algeria",
+		"popularity": 4,
+		"capital": "Algiers"
+	},
+	"EC": {
+		"name": "Ecuador",
+		"popularity": 4,
+		"capital": "Quito"
+	},
+	"EE": {
+		"name": "Estonia",
+		"popularity": 3,
+		"capital": "Tallinn"
+	},
+	"EG": {
+		"name": "Egypt",
+		"popularity": 7,
+		"capital": "Cairo"
+	},
+	"EH": {
+		"name": "Western Sahara",
+		"popularity": 2,
+		"capital": "El Aaiún"
+	},
+	"ER": {
+		"name": "Eritrea",
+		"popularity": 2,
+		"capital": "Asmara"
+	},
+	"ES": {
+		"name": "Spain",
+		"popularity": 7,
+		"capital": "Madrid"
+	},
+	"ET": {
+		"name": "Ethiopia",
+		"popularity": 4,
+		"capital": "Addis Ababa"
+	},
+	"EU": {
+		"name": "Europe",
+		"popularity": 8,
+		"capital": "Brussels"
+	},
+	"FI": {
+		"name": "Finland",
+		"popularity": 5,
+		"capital": "Helsinki"
+	},
+	"FJ": {
+		"name": "Fiji",
+		"popularity": 1,
+		"capital": "Suva"
+	},
+	"FM": {
+		"name": "Micronesia",
+		"popularity": 2,
+		"capital": "Palikir"
+	},
+	"FR": {
+		"name": "France",
+		"popularity": 8,
+		"capital": "Paris"
+	},
+	"GA": {
+		"name": "Gabon",
+		"popularity": 2,
+		"capital": "Libreville"
+	},
+	"GB-ENG": {
+		"name": "England",
+		"popularity": 6,
+		"capital": "London"
+	},
+	"GB-SCT": {
+		"name": "Scotland",
+		"popularity": 5,
+		"capital": "Edinburgh"
+	},
+	"GB-WLS": {
+		"name": "Wales",
+		"popularity": 4,
+		"capital": "Cardiff"
+	},
+	"GB": {
+		"name": "United Kingdom",
+		"popularity": 8,
+		"capital": "London"
+	},
+	"GD": {
+		"name": "Grenada",
+		"popularity": 3,
+		"capital": "St. George's"
+	},
+	"GE": {
+		"name": "Georgia",
+		"popularity": 4,
+		"capital": "Tbilisi"
+	},
+	"GH": {
+		"name": "Ghana",
+		"popularity": 4,
+		"capital": "Accra"
+	},
+	"GI": {
+		"name": "Gibraltar",
+		"popularity": 2,
+		"capital": "Gibraltar"
+	},
+	"GL": {
+		"name": "Greenland",
+		"popularity": 3,
+		"capital": "Nuuk"
+	},
+	"GM": {
+		"name": "Gambia",
+		"popularity": 2,
+		"capital": "Banjul"
+	},
+	"GN": {
+		"name": "Guinea",
+		"popularity": 2,
+		"capital": "Conakry"
+	},
+	"GQ": {
+		"name": "Equatorial Guinea",
+		"popularity": 2,
+		"capital": "Malabo"
+	},
+	"GR": {
+		"name": "Greece",
+		"popularity": 6,
+		"capital": "Athens"
+	},
+	"GW": {
+		"name": "Guinea-Bissau",
+		"popularity": 2,
+		"capital": "Bissau"
+	},
+	"GY": {
+		"name": "Guyana",
+		"popularity": 2,
+		"capital": "Georgetown"
+	},
+	"HK": {
+		"name": "Hong Kong",
+		"popularity": 5,
+		"capital": "Victoria City"
+	},
+	"HN": {
+		"name": "Honduras",
+		"popularity": 3,
+		"capital": "Tegucigalpa"
+	},
+	"HR": {
+		"name": "Croatia",
+		"popularity": 4,
+		"capital": "Zagreb"
+	},
+	"HT": {
+		"name": "Haiti",
+		"popularity": 3,
+		"capital": "Port-au-Prince"
+	},
+	"HU": {
+		"name": "Hungary",
+		"popularity": 4,
+		"capital": "Budapest"
+	},
+	"ID": {
+		"name": "Indonesia",
+		"popularity": 7,
+		"capital": "Jakarta"
+	},
+	"IE": {
+		"name": "Ireland",
+		"popularity": 5,
+		"capital": "Dublin"
+	},
+	"IL": {
+		"name": "Israel",
+		"popularity": 6,
+		"capital": "Jerusalem"
+	},
+	"IN": {
+		"name": "India",
+		"popularity": 9,
+		"capital": "New Delhi"
+	},
+	"IQ": {
+		"name": "Iraq",
+		"popularity": 4,
+		"capital": "Baghdad"
+	},
+	"IR": {
+		"name": "Iran",
+		"popularity": 4,
+		"capital": "Tehran"
+	},
+	"IS": {
+		"name": "Iceland",
+		"popularity": 4,
+		"capital": "Reykjavik"
+	},
+	"IT": {
+		"name": "Italy",
+		"popularity": 7,
+		"capital": "Rome"
+	},
+	"JM": {
+		"name": "Jamaica",
+		"popularity": 3,
+		"capital": "Kingston"
+	},
+	"JO": {
+		"name": "Jordan",
+		"popularity": 3,
+		"capital": "Amman"
+	},
+	"JP": {
+		"name": "Japan",
+		"popularity": 9,
+		"capital": "Tokyo"
+	},
+	"KE": {
+		"name": "Kenya",
+		"popularity": 4,
+		"capital": "Nairobi"
+	},
+	"KG": {
+		"name": "Kyrgyzstan",
+		"popularity": 3,
+		"capital": "Bishkek"
+	},
+	"KH": {
+		"name": "Cambodia",
+		"popularity": 3,
+		"capital": "Phnom Penh"
+	},
+	"KI": {
+		"name": "Kiribati",
+		"popularity": 1,
+		"capital": "South Tarawa"
+	},
+	"KM": {
+		"name": "Comoros",
+		"popularity": 1,
+		"capital": "Moroni"
+	},
+	"KN": {
+		"name": "Saint Kitts and Nevis",
+		"popularity": 1,
+		"capital": "Basseterre"
+	},
+	"KP": {
+		"name": "North Korea",
+		"popularity": 7,
+		"capital": "Pyongyang"
+	},
+	"KR": {
+		"name": "South Korea",
+		"popularity": 8,
+		"capital": "Seoul"
+	},
+	"KW": {
+		"name": "Kuwait",
+		"popularity": 4,
+		"capital": "Kuwait City"
+	},
+	"KZ": {
+		"name": "Kazakhstan",
+		"popularity": 4,
+		"capital": "Astana"
+	},
+	"LA": {
+		"name": "Laos",
+		"popularity": 3,
+		"capital": "Vientiane"
+	},
+	"LB": {
+		"name": "Lebanon",
+		"popularity": 4,
+		"capital": "Beirut"
+	},
+	"LC": {
+		"name": "Saint Lucia",
+		"popularity": 1,
+		"capital": "Castries"
+	},
+	"LI": {
+		"name": "Liechtenstein",
+		"popularity": 2,
+		"capital": "Vaduz"
+	},
+	"LK": {
+		"name": "Sri Lanka",
+		"popularity": 4,
+		"capital": "Sri Jayawardenepura Kotte"
+	},
+	"LR": {
+		"name": "Liberia",
+		"popularity": 2,
+		"capital": "Monrovia"
+	},
+	"LS": {
+		"name": "Lesotho",
+		"popularity": 2,
+		"capital": "Maseru"
+	},
+	"LT": {
+		"name": "Lithuania",
+		"popularity": 3,
+		"capital": "Vilnius"
+	},
+	"LU": {
+		"name": "Luxembourg",
+		"popularity": 4,
+		"capital": "Luxembourg"
+	},
+	"LV": {
+		"name": "Latvia",
+		"popularity": 3,
+		"capital": "Riga"
+	},
+	"LY": {
+		"name": "Libya",
+		"popularity": 3,
+		"capital": "Tripoli"
+	},
+	"MA": {
+		"name": "Morocco",
+		"popularity": 6,
+		"capital": "Rabat"
+	},
+	"MC": {
+		"name": "Monaco",
+		"popularity": 3,
+		"capital": "Monaco"
+	},
+	"MD": {
+		"name": "Moldova",
+		"popularity": 2,
+		"capital": "Chișinău"
+	},
+	"ME": {
+		"name": "Montenegro",
+		"popularity": 3,
+		"capital": "Podgorica"
+	},
+	"MG": {
+		"name": "Madagascar",
+		"popularity": 2,
+		"capital": "Antananarivo"
+	},
+	"MH": {
+		"name": "Marshall Islands",
+		"popularity": 2,
+		"capital": "Majuro"
+	},
+	"MK": {
+		"name": "North Macedonia",
+		"popularity": 3,
+		"capital": "Skopje"
+	},
+	"ML": {
+		"name": "Mali",
+		"popularity": 2,
+		"capital": "Bamako"
+	},
+	"MM": {
+		"name": "Myanmar",
+		"popularity": 3,
+		"capital": "Naypyidaw"
+	},
+	"MN": {
+		"name": "Mongolia",
+		"popularity": 3,
+		"capital": "Ulaanbaatar"
+	},
+	"MO": {
+		"name": "Macao",
+		"popularity": 3,
+		"capital": "Macau"
+	},
+	"MR": {
+		"name": "Mauritania",
+		"popularity": 2,
+		"capital": "Nouakchott"
+	},
+	"MT": {
+		"name": "Malta",
+		"popularity": 3,
+		"capital": "Valletta"
+	},
+	"MU": {
+		"name": "Mauritius",
+		"popularity": 2,
+		"capital": "Port Louis"
+	},
+	"MV": {
+		"name": "Maldives",
+		"popularity": 2,
+		"capital": "Malé"
+	},
+	"MW": {
+		"name": "Malawi",
+		"popularity": 2,
+		"capital": "Lilongwe"
+	},
+	"MX": {
+		"name": "Mexico",
+		"popularity": 8,
+		"capital": "Mexico City"
+	},
+	"MY": {
+		"name": "Malaysia",
+		"popularity": 5,
+		"capital": "Kuala Lumpur"
+	},
+	"MZ": {
+		"name": "Mozambique",
+		"popularity": 2,
+		"capital": "Maputo"
+	},
+	"NA": {
+		"name": "Namibia",
+		"popularity": 3,
+		"capital": "Windhoek"
+	},
+	"NE": {
+		"name": "Niger",
+		"popularity": 3,
+		"capital": "Niamey"
+	},
+	"NG": {
+		"name": "Nigeria",
+		"popularity": 6,
+		"capital": "Abuja"
+	},
+	"NI": {
+		"name": "Nicaragua",
+		"popularity": 3,
+		"capital": "Managua"
+	},
+	"NL": {
+		"name": "Netherlands",
+		"popularity": 7,
+		"capital": "Amsterdam"
+	},
+	"NO": {
+		"name": "Norway",
+		"popularity": 6,
+		"capital": "Oslo"
+	},
+	"NP": {
+		"name": "Nepal",
+		"popularity": 5,
+		"capital": "Kathmandu"
+	},
+	"NR": {
+		"name": "Nauru",
+		"popularity": 1,
+		"capital": "Yaren"
+	},
+	"NZ": {
+		"name": "New Zealand",
+		"popularity": 7,
+		"capital": "Wellington"
+	},
+	"OM": {
+		"name": "Oman",
+		"popularity": 4,
+		"capital": "Muscat"
+	},
+	"PA": {
+		"name": "Panama",
+		"popularity": 3,
+		"capital": "Panama City"
+	},
+	"PE": {
+		"name": "Peru",
+		"popularity": 5,
+		"capital": "Lima"
+	},
+	"PG": {
+		"name": "Papua New Guinea",
+		"popularity": 3,
+		"capital": "Port Moresby"
+	},
+	"PH": {
+		"name": "Philippines",
+		"popularity": 6,
+		"capital": "Manila"
+	},
+	"PK": {
+		"name": "Pakistan",
+		"popularity": 6,
+		"capital": "Islamabad"
+	},
+	"PL": {
+		"name": "Poland",
+		"popularity": 5,
+		"capital": "Warsaw"
+	},
+	"PS": {
+		"name": "Palestine",
+		"popularity": 3,
+		"capital": "Ramallah"
+	},
+	"PT": {
+		"name": "Portugal",
+		"popularity": 6,
+		"capital": "Lisbon"
+	},
+	"PW": {
+		"name": "Palau",
+		"popularity": 1,
+		"capital": "Ngerulmud"
+	},
+	"PY": {
+		"name": "Paraguay",
+		"popularity": 3,
+		"capital": "Asunción"
+	},
+	"QA": {
+		"name": "Qatar",
+		"popularity": 5,
+		"capital": "Doha"
+	},
+	"RO": {
+		"name": "Romania",
+		"popularity": 5,
+		"capital": "Bucharest"
+	},
+	"RS": {
+		"name": "Serbia",
+		"popularity": 4,
+		"capital": "Belgrade"
+	},
+	"RU": {
+		"name": "Russia",
+		"popularity": 9,
+		"capital": "Moscow"
+	},
+	"RW": {
+		"name": "Rwanda",
+		"popularity": 2,
+		"capital": "Kigali"
+	},
+	"SA": {
+		"name": "Saudi Arabia",
+		"popularity": 6,
+		"capital": "Riyadh"
+	},
+	"SB": {
+		"name": "Solomon Islands",
+		"popularity": 1,
+		"capital": "Honiara"
+	},
+	"SC": {
+		"name": "Seychelles",
+		"popularity": 1,
+		"capital": "Victoria"
+	},
+	"SD": {
+		"name": "Sudan",
+		"popularity": 3,
+		"capital": "Khartoum"
+	},
+	"SE": {
+		"name": "Sweden",
+		"popularity": 6,
+		"capital": "Stockholm"
+	},
+	"SG": {
+		"name": "Singapore",
+		"popularity": 7,
+		"capital": "Singapore"
+	},
+	"SI": {
+		"name": "Slovenia",
+		"popularity": 4,
+		"capital": "Ljubljana"
+	},
+	"SK": {
+		"name": "Slovakia",
+		"popularity": 4,
+		"capital": "Bratislava"
+	},
+	"SL": {
+		"name": "Sierra Leone",
+		"popularity": 2,
+		"capital": "Freetown"
+	},
+	"SM": {
+		"name": "San Marino",
+		"popularity": 3,
+		"capital": "San Marino"
+	},
+	"SN": {
+		"name": "Senegal",
+		"popularity": 3,
+		"capital": "Dakar"
+	},
+	"SO": {
+		"name": "Somalia",
+		"popularity": 2,
+		"capital": "Mogadishu"
+	},
+	"SR": {
+		"name": "Suriname",
+		"popularity": 2,
+		"capital": "Paramaribo"
+	},
+	"SS": {
+		"name": "South Sudan",
+		"popularity": 2,
+		"capital": "Juba"
+	},
+	"ST": {
+		"name": "Sao Tome and Principe",
+		"popularity": 1,
+		"capital": "São Tomé"
+	},
+	"SV": {
+		"name": "El Salvador",
+		"popularity": 3,
+		"capital": "San Salvador"
+	},
+	"SY": {
+		"name": "Syria",
+		"popularity": 5,
+		"capital": "Damascus"
+	},
+	"SZ": {
+		"name": "Eswatini",
+		"popularity": 2,
+		"capital": "Mbabane"
+	},
+	"TD": {
+		"name": "Chad",
+		"popularity": 2,
+		"capital": "N'Djamena"
+	},
+	"TG": {
+		"name": "Togo",
+		"popularity": 2,
+		"capital": "Lomé"
+	},
+	"TH": {
+		"name": "Thailand",
+		"popularity": 5,
+		"capital": "Bangkok"
+	},
+	"TJ": {
+		"name": "Tajikistan",
+		"popularity": 3,
+		"capital": "Dushanbe"
+	},
+	"TL": {
+		"name": "Timor-Leste",
+		"popularity": 2,
+		"capital": "Dili"
+	},
+	"TM": {
+		"name": "Turkmenistan",
+		"popularity": 3,
+		"capital": "Ashgabat"
+	},
+	"TN": {
+		"name": "Tunisia",
+		"popularity": 3,
+		"capital": "Tunis"
+	},
+	"TO": {
+		"name": "Tonga",
+		"popularity": 1,
+		"capital": "Nuku'alofa"
+	},
+	"TR": {
+		"name": "Turkey",
+		"popularity": 7,
+		"capital": "Ankara"
+	},
+	"TT": {
+		"name": "Trinidad and Tobago",
+		"popularity": 1,
+		"capital": "Port of Spain"
+	},
+	"TV": {
+		"name": "Tuvalu",
+		"popularity": 1,
+		"capital": "Funafuti"
+	},
+	"TW": {
+		"name": "Taiwan",
+		"popularity": 6,
+		"capital": "Taipei"
+	},
+	"TZ": {
+		"name": "Tanzania",
+		"popularity": 4,
+		"capital": "Dodoma"
+	},
+	"UA": {
+		"name": "Ukraine",
+		"popularity": 6,
+		"capital": "Kyiv"
+	},
+	"UG": {
+		"name": "Uganda",
+		"popularity": 3,
+		"capital": "Kampala"
+	},
+	"US": {
+		"name": "United States",
+		"popularity": 9,
+		"capital": "Washington, D.C."
+	},
+	"UY": {
+		"name": "Uruguay",
+		"popularity": 3,
+		"capital": "Montevideo"
+	},
+	"UZ": {
+		"name": "Uzbekistan",
+		"popularity": 3,
+		"capital": "Tashkent"
+	},
+	"VA": {
+		"name": "Vatican City",
+		"popularity": 5,
+		"capital": "Vatican City"
+	},
+	"VC": {
+		"name": "Saint Vincent and the Grenadines",
+		"popularity": 1,
+		"capital": "Kingstown"
+	},
+	"VE": {
+		"name": "Venezuela",
+		"popularity": 4,
+		"capital": "Caracas"
+	},
+	"VN": {
+		"name": "Vietnam",
+		"popularity": 6,
+		"capital": "Hanoi"
+	},
+	"VU": {
+		"name": "Vanuatu",
+		"popularity": 1,
+		"capital": "Port Vila"
+	},
+	"WS": {
+		"name": "Samoa",
+		"popularity": 1,
+		"capital": "Apia"
+	},
+	"XK": {
+		"name": "Kosovo",
+		"popularity": 2,
+		"capital": "Pristina"
+	},
+	"YE": {
+		"name": "Yemen",
+		"popularity": 3,
+		"capital": "Sana'a"
+	},
+	"ZA": {
+		"name": "South Africa",
+		"popularity": 7,
+		"capital": "Pretoria"
+	},
+	"ZM": {
+		"name": "Zambia",
+		"popularity": 3,
+		"capital": "Lusaka"
+	},
+	"ZW": {
+		"name": "Zimbabwe",
+		"popularity": 3,
+		"capital": "Harare"
+	}
 }

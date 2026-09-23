@@ -1,3 +1,15 @@
-// since there's no dynamic data here, we can prerender
-// it so that it gets served as a static asset in production
-export const prerender = true
+import { fetchStreak, fetchTodaysDailies } from '$lib/fetchGameStats'
+
+export const load = async ({ parent }) => {
+	const { session, supabase } = await parent()
+
+	if (!session?.user) {
+		return { dailies: null, streak: null }
+	}
+
+	const userId = session.user.id
+	return {
+		dailies: fetchTodaysDailies(supabase as any, userId),
+		streak: fetchStreak(supabase as any, userId)
+	}
+}

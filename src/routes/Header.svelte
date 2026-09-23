@@ -8,6 +8,8 @@
 		<div class="links">
 			<a href="/pi">Pi</a>
 			<a href="/flags">Flags</a>
+			<a href="/capitals">Capitals</a>
+			<a href="/elements">Elements</a>
 			{#if session}
 				<a href="/account">Account</a>
 			{:else}
@@ -61,7 +63,7 @@
 		opacity: 1;
 	}
 
-	@media (max-width: 480px) {
+	@media (max-width: 600px) {
 		header {
 			padding: 0 1rem;
 		}
@@ -71,7 +73,11 @@
 		}
 
 		.links {
-			gap: 1rem;
+			gap: 0.9rem;
+		}
+
+		.links a {
+			font-size: 0.8rem;
 		}
 	}
 </style>

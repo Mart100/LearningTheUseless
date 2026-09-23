@@ -11,7 +11,11 @@
 
 	$: isDaily = $page.url.searchParams.get('daily') === '1'
 
-	let allCountries = Object.entries(countryCodes).map(([code, data]) => ({ code, ...data }))
+	// Build a list of entries that have a capital (filter out Antarctica and EU pseudo-entries)
+	type CountryEntry = { code: string; name: string; capital: string; popularity: number }
+	const allCountries: CountryEntry[] = Object.entries(countryCodes)
+		.filter(([, d]) => d.capital && d.capital !== 'N/A')
+		.map(([code, d]) => ({ code, name: d.name, capital: d.capital!, popularity: d.popularity }))
 
 	export let data
 	let { session, supabase } = data
@@ -23,12 +27,12 @@
 	let flagTimeLeft = 100
 	let score = 0
 	let countryIdx = 0
-	let country: { code: string; name: string } | undefined
+	let currentCountry: CountryEntry | undefined
 	let countryInput: HTMLInputElement
 	let restartBtn: HTMLButtonElement
-	let countryInputSuggestions: string[] = []
-	let mistakes: { name: string; flag: string }[] = []
-	let countries: typeof allCountries = []
+	let inputSuggestions: string[] = []
+	let mistakes: { country: string; capital: string; flagCode: string }[] = []
+	let countries: CountryEntry[] = []
 
 	let interval: ReturnType<typeof setInterval>
 
@@ -36,20 +40,20 @@
 		score = 0
 		countryIdx = 0
 		started = true
+		ended = false
 		timeLeft = 5 * 60
 		flagTimeLeft = 100
 		mistakes = []
 
 		if (isDaily) {
-			// Deterministic order for the daily: seeded shuffle
-			countries = seededShuffle(allCountries, dailySeedString('flags'))
+			countries = seededShuffle(allCountries, dailySeedString('capitals'))
 		} else {
 			countries = [...allCountries]
 				.sort(() => Math.random() - 0.5)
 				.sort((a, b) => b.popularity - a.popularity)
 		}
 
-		nextFlag()
+		nextCountry()
 
 		let intervalTick = 0
 		interval = setInterval(() => {
@@ -57,25 +61,14 @@
 				clearInterval(interval)
 				return
 			}
-
 			intervalTick++
-
 			if (intervalTick % 10 === 0) timeLeft--
-
 			flagTimeLeft--
-			if (flagTimeLeft === 0) {
-				addMistake()
-			}
+			if (flagTimeLeft === 0) addMistake()
 		}, 100)
 
 		await tick()
-
 		if (countryInput) countryInput.focus()
-	}
-
-	function loadNextCountry() {
-		let c = countries[countryIdx]
-		return { code: c.code, name: c.name }
 	}
 
 	function formatTimeLeft(time: number) {
@@ -87,17 +80,17 @@
 	function onInputKeypress(event: KeyboardEvent) {
 		if (event.key === 'Tab') {
 			event.preventDefault()
-			if (countryInputSuggestions.length === 0) return
-			countryInput.value = countryInputSuggestions[0]
+			if (inputSuggestions.length === 0) return
+			countryInput.value = inputSuggestions[0]
 			return
 		} else if (event.key !== 'Enter') {
 			let inputValue = countryInput.value
 			if (event.key === 'Backspace') inputValue = inputValue.slice(0, -1)
-			else if (/^[a-zA-Z]$/.test(event.key)) inputValue += event.key
+			else if (/^[a-zA-Z ,.'()é-]$/i.test(event.key)) inputValue += event.key
 			if (inputValue.length < 2) return
-			countryInputSuggestions = countries
-				.filter((c) => c.name.toLowerCase().startsWith(inputValue.toLowerCase()))
-				.map((c) => c.name)
+			inputSuggestions = allCountries
+				.filter((c) => c.capital.toLowerCase().startsWith(inputValue.toLowerCase()))
+				.map((c) => c.capital)
 		}
 	}
 
@@ -108,31 +101,34 @@
 	}
 
 	function onInputSubmit() {
-		if (!country) return
-
-		let inputValue = countryInput.value
-		if (inputValue.toLowerCase() === country.name.toLowerCase()) {
+		if (!currentCountry) return
+		const inputValue = countryInput.value.trim()
+		if (inputValue.toLowerCase() === currentCountry.capital.toLowerCase()) {
 			score++
-			nextFlag()
+			nextCountry()
 		} else {
 			addMistake()
 		}
 	}
 
 	function addMistake() {
-		if (!country) return
+		if (!currentCountry) return
 		mistakes = [
 			...mistakes,
-			{ name: country.name, flag: `/flags/${country.code.toLowerCase()}.svg` }
+			{
+				country: currentCountry.name,
+				capital: currentCountry.capital,
+				flagCode: currentCountry.code
+			}
 		]
-
 		if (mistakes.length === 5) endGame()
-		else nextFlag()
+		else nextCountry()
 	}
 
 	function endGame() {
 		ended = true
 		started = false
+		clearInterval(interval)
 	}
 
 	function restartGame() {
@@ -148,8 +144,8 @@
 		else {
 			scoreSavingStatus = 'saving'
 			const today = todayUTC()
-			const { error, status, data } = await supabase
-				.from('game_flags')
+			const { data } = await supabase
+				.from('game_capitals')
 				.insert({ score, is_daily: isDaily, daily_date: isDaily ? today : null })
 				.select()
 
@@ -166,20 +162,22 @@
 		}
 	}
 
-	function nextFlag() {
+	function nextCountry() {
 		if (countryInput) {
 			countryInput.value = ''
 			countryInput.focus()
 		}
-		country = loadNextCountry()
+		if (countryIdx >= countries.length) {
+			endGame()
+			return
+		}
+		currentCountry = countries[countryIdx]
 		countryIdx++
-		countryInputSuggestions = []
+		inputSuggestions = []
 		flagTimeLeft = 100
 	}
 
-	onDestroy(() => {
-		clearInterval(interval)
-	})
+	onDestroy(() => clearInterval(interval))
 
 	let gameStatsStatus: 'guest' | 'loading' | 'error' | 'loaded' = 'guest'
 	let gameStats: GameStatsData | null = null
@@ -206,12 +204,12 @@
 </script>
 
 <svelte:head>
-	<title>World Flags — Learning The Useless</title>
-	<meta name="description" content="Name every country's flag. Five minutes on the clock." />
-	<meta property="og:title" content="World Flags — Learning The Useless" />
+	<title>World Capitals — Learning The Useless</title>
+	<meta name="description" content="Type the capital city for each country shown." />
+	<meta property="og:title" content="World Capitals — Learning The Useless" />
 	<meta
 		property="og:description"
-		content="Name every country flag before the timer runs out. Train your vexillology — flags quiz with leaderboards."
+		content="Test your world geography — type the capital city for each country. How many can you name?"
 	/>
 	<meta property="og:type" content="website" />
 	<meta property="og:image" content="/og-image.png" />
@@ -219,13 +217,17 @@
 </svelte:head>
 
 <div class="page">
-	<h1>Country Flags{isDaily ? ' — Daily' : ''}</h1>
+	<h1>World Capitals{isDaily ? ' — Daily' : ''}</h1>
 
 	{#if isDaily}
 		<p class="daily-badge">Today's daily challenge · {todayUTC()}</p>
 	{/if}
 
 	{#if !started && !ended}
+		<p class="instructions">
+			A country name appears. Type its capital city. Five minutes on the clock; five mistakes ends
+			the game.
+		</p>
 		<button on:click={startGame} id="startBtn" class="button primary">Start</button>
 	{:else}
 		<div id="topInfo">
@@ -234,7 +236,7 @@
 		</div>
 
 		{#if ended}
-			<p class="game-over">Time's up — {score} flags named.</p>
+			<p class="game-over">{score} capitals named.</p>
 			<div class="button-row">
 				<button id="restart" class="button" on:click={restartGame} bind:this={restartBtn}>
 					Try again
@@ -250,34 +252,39 @@
 					</button>
 				{/if}
 				<ShareCard
-					headline="{score} flags"
-					detail="in {formatTimeLeft(5 * 60 - timeLeft)} · Country Flags"
+					headline="{score} capitals"
+					detail="in {formatTimeLeft(5 * 60 - timeLeft)} · World Capitals"
 				/>
 			</div>
-		{:else if started}
-			<div id="flag">
-				<img src="/flags/{country?.code.toLowerCase()}.svg" alt="Country flag" />
+		{:else if started && currentCountry}
+			<div id="countryDisplay">
+				<img
+					class="flag"
+					src="/flags/{currentCountry.code.toLowerCase()}.svg"
+					alt="Flag of {currentCountry.name}"
+				/>
+				<p class="country-name">{currentCountry.name}</p>
 			</div>
 			<div id="flagTime"><div class="inner" style="width:{flagTimeLeft}%"></div></div>
 
 			<form autocomplete="off" class="inputForm" on:submit|preventDefault={onInputSubmit}>
 				<div class="autocomplete">
 					<input
-						id="countryInput"
+						id="capitalInput"
 						class="input"
 						type="text"
 						autocapitalize="off"
 						autocomplete="off"
 						autocorrect="off"
-						placeholder="Country name"
+						placeholder="Capital city"
 						spellcheck="false"
 						data-form-type="other"
 						bind:this={countryInput}
 						on:keydown={onInputKeypress}
 					/>
-					{#if countryInputSuggestions.length > 0}
+					{#if inputSuggestions.length > 0}
 						<div class="suggestions">
-							{#each countryInputSuggestions.slice(0, 5) as suggestion}
+							{#each inputSuggestions.slice(0, 5) as suggestion}
 								<!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
 								<div on:click={onSuggestionClick}>{suggestion}</div>
 							{/each}
@@ -293,10 +300,15 @@
 		<div class="mistakes-section">
 			<h2>Missed ({mistakes.length}/5)</h2>
 			<div class="mistakes">
-				{#each mistakes as mistake}
+				{#each mistakes as m}
 					<div class="mistake">
-						<img src={mistake.flag} alt={mistake.name} />
-						<span>{mistake.name}</span>
+						<img
+							src="/flags/{m.flagCode.toLowerCase()}.svg"
+							alt={m.country}
+							class="mistake-flag"
+						/>
+						<span class="mistake-country">{m.country}</span>
+						<span class="mistake-capital">{m.capital}</span>
 					</div>
 				{/each}
 			</div>
@@ -336,6 +348,13 @@
 		margin-bottom: 1.25rem;
 	}
 
+	.instructions {
+		font-size: 0.875rem;
+		color: var(--fg-muted);
+		max-width: 36rem;
+		margin-bottom: 1.25rem;
+	}
+
 	#startBtn {
 		font-size: 1rem;
 		padding: 0.6rem 1.75rem;
@@ -370,19 +389,27 @@
 		margin-bottom: 2rem;
 	}
 
-	#flag {
-		width: 180px;
+	#countryDisplay {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
 		margin-bottom: 0.5rem;
 	}
 
-	#flag img {
-		width: 100%;
-		display: block;
+	.flag {
+		width: 80px;
 		border: 1px solid var(--border);
+		flex-shrink: 0;
+	}
+
+	.country-name {
+		font-size: 1.5rem;
+		font-weight: 600;
+		margin: 0;
 	}
 
 	#flagTime {
-		width: 180px;
+		width: 280px;
 		height: 3px;
 		background: var(--border);
 		margin-bottom: 1rem;
@@ -458,17 +485,24 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 0.35rem;
+		gap: 0.2rem;
 	}
 
-	.mistake img {
-		width: 80px;
+	.mistake-flag {
+		width: 70px;
 		border: 1px solid var(--border);
 	}
 
-	.mistake span {
-		font-size: 0.75rem;
+	.mistake-country {
+		font-size: 0.7rem;
 		color: var(--fg-muted);
+		text-align: center;
+		max-width: 80px;
+	}
+
+	.mistake-capital {
+		font-size: 0.8rem;
+		font-weight: 600;
 		text-align: center;
 		max-width: 80px;
 	}
