@@ -49,47 +49,38 @@
 		</div>
 	{/if}
 
-	{#if session && dailies}
-		<section class="daily-section">
-			<h2 class="section-label">Today's dailies</h2>
-			<ul class="daily-list" role="list">
-				{#each games.filter((g) => g.supportsDaily) as game}
-					{@const d = dailies[game.slug as Game]}
-					<li class="daily-row">
-						<a href="{game.href}?daily=1" class="daily-link">
-							<span class="daily-name">{game.title}</span>
-							{#if d?.played}
-								<span class="daily-score">{d.score} — done ✓</span>
-							{:else}
-								<span class="daily-cta">Play →</span>
-							{/if}
-						</a>
-					</li>
-				{/each}
-			</ul>
-		</section>
-	{:else if !session}
-		<p class="daily-guest-nudge">
-			<a href="/signup">Sign in</a> to track daily challenges and streaks.
-		</p>
-	{/if}
-
-	<section>
-		<h2 class="section-label">All games</h2>
-		<ul class="game-list" role="list">
-			{#each games as game}
-				<li>
+	<ul class="game-list" role="list">
+		{#each games as game}
+			{@const d = dailies?.[game.slug as Game]}
+			<li>
+				<div class="game-row-wrap">
 					<a href={game.href} class="game-row">
 						<div class="game-info">
 							<span class="game-name">{game.title}</span>
 							<span class="game-desc">{game.description}</span>
 						</div>
-						<span class="game-cta" aria-hidden="true">Play →</span>
+						<span class="play-cta" aria-hidden="true">Play →</span>
 					</a>
-				</li>
-			{/each}
-		</ul>
-	</section>
+
+					{#if game.supportsDaily}
+						<div class="daily-cell">
+							{#if session && d?.played}
+								<span class="daily-done" title="Today's daily — done">✓ {d.score}</span>
+							{:else}
+								<a href="{game.href}?daily=1" class="daily-btn">Daily</a>
+							{/if}
+						</div>
+					{/if}
+				</div>
+			</li>
+		{/each}
+	</ul>
+
+	{#if !session}
+		<p class="signin-nudge">
+			<a href="/signup">Sign in</a> to track daily challenges and streaks.
+		</p>
+	{/if}
 </div>
 
 <style>
@@ -103,6 +94,7 @@
 		margin-bottom: 2rem;
 	}
 
+	/* Streak bar — keep as-is from Phase 2 */
 	.streak-bar {
 		display: flex;
 		align-items: center;
@@ -124,72 +116,7 @@
 		color: var(--fg-muted);
 	}
 
-	.section-label {
-		font-size: 0.75rem;
-		font-weight: 600;
-		text-transform: uppercase;
-		letter-spacing: 0.07em;
-		color: var(--fg-muted);
-		margin-bottom: 0.75rem;
-	}
-
-	.daily-section {
-		margin-bottom: 2.5rem;
-	}
-
-	.daily-list {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-		border-top: 1px solid var(--border);
-	}
-
-	.daily-list li {
-		border-bottom: 1px solid var(--border);
-	}
-
-	.daily-row {
-		display: flex;
-	}
-
-	.daily-link {
-		display: flex;
-		align-items: center;
-		width: 100%;
-		padding: 0.85rem 0;
-		text-decoration: none;
-		color: inherit;
-		gap: 1rem;
-	}
-
-	.daily-link:hover .daily-name {
-		text-decoration: underline;
-		text-underline-offset: 2px;
-	}
-
-	.daily-name {
-		font-size: 0.9rem;
-		font-weight: 600;
-		flex: 1;
-	}
-
-	.daily-score {
-		font-size: 0.875rem;
-		color: var(--fg-muted);
-		font-variant-numeric: tabular-nums;
-	}
-
-	.daily-cta {
-		font-size: 0.875rem;
-		color: var(--fg-subtle, #aaa);
-	}
-
-	.daily-guest-nudge {
-		font-size: 0.875rem;
-		color: var(--fg-muted);
-		margin-bottom: 2rem;
-	}
-
+	/* Unified game list — one row per game */
 	.game-list {
 		list-style: none;
 		padding: 0;
@@ -201,13 +128,22 @@
 		border-bottom: 1px solid var(--border);
 	}
 
+	.game-row-wrap {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	/* The free-play link fills all available width */
 	.game-row {
 		display: flex;
 		align-items: center;
 		gap: 1rem;
+		flex: 1;
 		padding: 1.25rem 0;
 		text-decoration: none;
 		color: inherit;
+		min-width: 0;
 	}
 
 	.game-row:hover {
@@ -224,6 +160,7 @@
 		flex-direction: column;
 		gap: 0.2rem;
 		flex: 1;
+		min-width: 0;
 	}
 
 	.game-name {
@@ -236,9 +173,47 @@
 		color: var(--fg-muted);
 	}
 
-	.game-cta {
+	.play-cta {
 		font-size: 0.875rem;
 		color: var(--fg-subtle, #aaa);
 		flex-shrink: 0;
+	}
+
+	/* Daily column — fixed width so every row aligns */
+	.daily-cell {
+		flex-shrink: 0;
+		width: 5.5rem;
+		display: flex;
+		justify-content: flex-end;
+	}
+
+	.daily-btn {
+		font-size: 0.8rem;
+		color: var(--fg-muted);
+		text-decoration: none;
+		border: 1px solid var(--border);
+		border-radius: var(--radius-sm, 3px);
+		padding: 0.25rem 0.6rem;
+		white-space: nowrap;
+		transition: color 0.12s, border-color 0.12s;
+	}
+
+	.daily-btn:hover {
+		color: var(--fg);
+		border-color: var(--fg-muted);
+		opacity: 1;
+	}
+
+	.daily-done {
+		font-size: 0.8rem;
+		color: var(--fg-muted);
+		font-variant-numeric: tabular-nums;
+		white-space: nowrap;
+	}
+
+	.signin-nudge {
+		margin-top: 1.75rem;
+		font-size: 0.875rem;
+		color: var(--fg-muted);
 	}
 </style>
