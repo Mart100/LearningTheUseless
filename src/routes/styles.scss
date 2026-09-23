@@ -1,70 +1,81 @@
-:root {
-	--font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
-		Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-	--font-mono: 'Fira Mono', monospace;
-	--bg-color: rgb(255, 255, 255);
-	--color-1: rgb(255, 11, 0);
-	--color-text: black;
-	--button-primary-color: #24b47e;
-	--custom-color-secondary: #666;
-	--border-color: 1px solid #333;
-	--border-radius: 5px;
+@use '../lib/styles/tokens';
 
-	font-family: var(--font-family);
-	color: var(--color-text);
-}
-
-* {
-	color: var(--color-text);
-	font-family: var(--font-family);
+// ── Reset & base ──────────────────────────────
+*,
+*::before,
+*::after {
 	box-sizing: border-box;
 }
 
 html,
 body {
 	min-height: 100vh;
-	background-attachment: fixed;
-	background-color: var(--bg-color);
-	background-size: 100vw 100vh;
 	padding: 0;
 	margin: 0;
-	height: 100vh;
-	width: 100%;
 	overflow-x: hidden;
-}
-
-body {
+	background-color: var(--color-bg);
+	color: var(--color-text);
+	font-family: var(--font-family);
+	font-size: 16px;
+	line-height: 1.6;
+	-webkit-font-smoothing: antialiased;
 	scrollbar-gutter: stable both-edges;
 }
 
+// ── Typography defaults ───────────────────────
 h1,
 h2,
-p {
-	font-weight: 400;
-}
-
-p {
-	line-height: 1.5;
-}
-
-a {
-	color: var(--color-theme-1);
-	text-decoration: none;
-}
-
-a:hover {
-	text-decoration: underline;
+h3,
+h4,
+h5,
+h6 {
+	font-weight: 700;
+	line-height: 1.25;
+	color: var(--color-text);
+	margin-top: 0;
 }
 
 h1 {
-	font-size: 2rem;
-	text-align: center;
+	font-size: var(--text-2xl);
 }
-
 h2 {
-	font-size: 1rem;
+	font-size: var(--text-xl);
+}
+h3 {
+	font-size: var(--text-lg);
 }
 
+p {
+	line-height: 1.65;
+	margin-top: 0;
+	color: var(--color-text-muted);
+}
+
+a {
+	color: var(--color-accent-light);
+	text-decoration: none;
+	transition: color var(--transition-fast);
+
+	&:hover {
+		color: var(--color-accent-light);
+		text-decoration: underline;
+	}
+}
+
+// ── Form elements ─────────────────────────────
+input,
+button,
+textarea,
+select {
+	font-size: inherit;
+	font-family: inherit;
+}
+
+button:focus:not(:focus-visible) {
+	outline: none;
+}
+
+// ── Shared utility classes ────────────────────
 .text-column {
 	display: flex;
 	max-width: 48rem;
@@ -74,69 +85,81 @@ h2 {
 	margin: 0 auto;
 }
 
-input,
-button {
-	font-size: inherit;
-	font-family: inherit;
+// ── Shared input / button skins ───────────────
+// These legacy classes are kept so existing pages don't break.
+.input {
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-md);
+	padding: var(--space-2) var(--space-4);
+	font-size: var(--text-sm);
+	width: 100%;
+	background-color: var(--color-surface-2);
+	color: var(--color-text);
+	transition: border-color var(--transition-base);
+
+	&:focus {
+		outline: none;
+		border-color: var(--color-accent);
+		box-shadow: 0 0 0 3px var(--color-accent-dim);
+	}
 }
 
-button:focus:not(:focus-visible) {
-	outline: none;
+.button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--space-2);
+	padding: var(--space-2) var(--space-5);
+	border-radius: var(--radius-md);
+	font-weight: 600;
+	font-size: var(--text-sm);
+	cursor: pointer;
+	border: 1px solid var(--color-border);
+	background-color: var(--color-surface-2);
+	color: var(--color-text);
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	transition: background-color var(--transition-base), box-shadow var(--transition-base),
+		transform var(--transition-fast);
+	text-decoration: none;
+
+	&:hover {
+		background-color: var(--color-surface-hover);
+		text-decoration: none;
+	}
+
+	&:active {
+		transform: scale(0.97);
+	}
+
+	&.primary {
+		background-color: var(--color-accent);
+		border-color: var(--color-accent);
+		color: #fff;
+
+		&:hover {
+			background-color: #6d28d9;
+			box-shadow: var(--shadow-glow);
+		}
+	}
+
+	&.secondary {
+		background-color: var(--color-surface-2);
+
+		&:hover {
+			background-color: var(--color-surface-hover);
+		}
+	}
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+		transform: none;
+	}
 }
 
 @media (min-width: 720px) {
 	h1 {
-		font-size: 2.4rem;
-	}
-}
-
-@media (prefers-color-scheme: dark) {
-	:root {
-		--bg-color: rgb(18, 18, 18);
-		--color-text: rgb(232, 230, 227);
-	}
-}
-
-.input {
-	border: var(--border-color);
-	border-radius: var(--border-radius);
-	padding: 0.5rem 1rem;
-	font-size: 0.9rem;
-	width: 100%;
-	background-color: var(--custom-bg-color);
-	color: var(--custom-color);
-}
-
-.button {
-	color: #fff;
-	border: var(--border-color);
-	background-color: var(--bg-color);
-	display: inline-block;
-	text-align: center;
-	border-radius: var(--border-radius);
-	padding: 0.5rem 1rem;
-	cursor: pointer;
-	text-align: center;
-	font-size: 0.9rem;
-	text-transform: uppercase;
-	transition-duration: 300ms;
-
-	&.primary {
-		background-color: var(--color-1);
-		border: 1px solid var(--color-1);
-		&:hover {
-			background-color: #2a2a2a;
-		}
-	}
-
-	&:hover {
-		background-color: rgb(22, 22, 22);
-	}
-
-	&.secondary {
-		background-color: rgb(60, 60, 60);
-		&:hover {
-			background-color: rgb(50, 50, 50);
-		}
+		font-size: var(--text-3xl);
 	}
 }

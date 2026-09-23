@@ -114,8 +114,19 @@
 </script>
 
 <svelte:head>
-	<title>Learn PI</title>
-	<meta name="description" content="Learn PI on this page" />
+	<title>Digits of Pi — Learning The Useless</title>
+	<meta
+		name="description"
+		content="Test how many digits of Pi (π) you can remember. Type them in order and beat your highscore!"
+	/>
+	<meta property="og:title" content="Digits of Pi — Learning The Useless" />
+	<meta
+		property="og:description"
+		content="How far into π can you go from memory? Type the digits in order and save your highscore."
+	/>
+	<meta property="og:type" content="website" />
+	<meta property="og:image" content="/og-image.svg" />
+	<meta name="twitter:card" content="summary_large_image" />
 </svelte:head>
 
 <div class="column">

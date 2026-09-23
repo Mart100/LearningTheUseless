@@ -9,5 +9,12 @@ export default defineConfig({
 			compiler: 'svelte',
 			autoInstall: true
 		})
-	]
+	],
+	css: {
+		preprocessorOptions: {
+			scss: {
+				api: 'modern-compiler'
+			}
+		}
+	}
 })
